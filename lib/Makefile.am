@@ -46,6 +46,8 @@ libgama_src = \
    gnu_gama/adj/adj_svd.h \
    gnu_gama/adj/envelope.h \
    gnu_gama/adj/homogenization.h \
+   gnu_gama/adj/icgs.cpp \
+   gnu_gama/adj/icgs.h \
    gnu_gama/sparse/intlist.h \
    gnu_gama/sparse/sbdiagonal.h \
    gnu_gama/sparse/smatrix_graph_connected.h \
