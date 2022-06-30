@@ -65,10 +65,11 @@
       ./configure
       make distcheck
 
-* Now when you have the release tarball ready (for example
-  ```gama-2.18.tar.gz```), you tag the git repository, for example
+* Now when you have the release tarball and all other release file ready
+  (for example ```gama-2.20.tar.gz``` and ```announce-2.20.txt```),
+  you commit all changes and tag the git repository, for example
 
-      git tag gama-2.18
+      git tag gama-2.20
 
   Push the tag to the repository (set the origin repo to ssh first if needed):
 
@@ -80,11 +81,11 @@
 * You also have to send an email about the new release to
   ```info-gama@@gnu.org``` and ```info-gnu@@gnu.org```, describing what
   is new in the release and what bugs were fixed (if any). Here is an
-  example text sent for version 2.18
+  example text sent for version 2.20
 
-      Subject: GNU gama 2.18 released
+      Subject: GNU gama 2.20 released
 
-      We are pleased to announce the release of GNU Gama 2.18.
+      We are pleased to announce the release of GNU Gama 2.20.
 
       There is one major fix visible to end users. Implicit value of XML
       parameter 'update_constrained_coordinates' was changed to "yes". The
@@ -145,8 +146,8 @@ Gnulib https://www.gnu.org/software/gnulib/manual/gnulib.html
 
       ./announce-gen --package-name gama \
          --release-type stable \
-         --current-version 2.17 \
-         --previous-version 2.18 \
+         --current-version 2.19 \
+         --previous-version 2.20 \
          --gpg-key-id 1b77fc09 \
          --url https://ftp.gnu.org/gnu/gama \
          --news NEWS
@@ -183,14 +184,14 @@ https://savannah.gnu.org/git/?group=gnulib)
 
 To upload your new release tarball, simply run
 
-      ./gnupload --to ftp.gnu.org:gama gama-2.18.tar.gz
+      ./gnupload --to ftp.gnu.org:gama gama-2.20.tar.gz
 
 You will be asked for your gpg passphrase (twice) and you will get
 an email when your upload is finished.
 
 Similarly you can replace the tarball, in case it is needed
 
-      ./gnupload --replace --to ftp.gnu.org:gama gama-2.18.tar.gz
+      ./gnupload --replace --to ftp.gnu.org:gama gama-2.20.tar.gz
 
 Use ```gnupload --help``` for the full list of options with examples, you
 can always try running ```gnupload``` with the option ```--dry-run```

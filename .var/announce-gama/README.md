@@ -8,12 +8,11 @@
 
 * copy or update file NEWS from the new release
 * copy new release tar ball
-* update gama-announce.sh (ie. update current and previous releases versions)
-* run ./gama-announce.sh > announce-version.txt
+* run ./gama-announce.sh current_ver previous_ver > announce-version.txt
+** for example: ./gama-announce.sh  2.20 2.19 > announce-2.20.txt
 * edit announce-version.txt
 
 # when done
 
-* git add announce-version.txt 
+* git add announce-version.txt
 * git commit
-
