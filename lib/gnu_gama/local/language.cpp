@@ -517,9 +517,9 @@ void set_gama_language(gama_language lang)
 	T_HTML_observations="Observations";
 	T_HTML_observed="observed";
 	T_HTML_points="Points";
-	T_HTML_r="r";
+	T_HTML_r="v";
 	T_HTML_rejected="Rejected";
-	T_HTML_rstud="|r'|";
+	T_HTML_rstud="|v'|";
 	T_HTML_ss="[ss]";
 	T_HTML_stddev_confi="std.dev&nbsp;conf.i.";
 	T_HTML_value="value";
