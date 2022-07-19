@@ -99,6 +99,8 @@ namespace GNU_gama
           s_error_xml_end,
           s_error_xml_description,
           s_error_xml_line_number,
+          s_linearization_iterations,
+          s_linearization_iterations_end,
           s_network_general_parameters,
           s_network_general_parameters_end,
           s_gama_local_adjustment,
@@ -287,6 +289,7 @@ namespace GNU_gama
           t_ind,
           t_left,
           t_line_number,
+          t_linearization_iterations,
           t_lower,
           t_network_general_parameters,
           t_network_processing_summary,
@@ -388,6 +391,7 @@ namespace GNU_gama
       void degrees_of_freedom(bool);
       void defect(bool);
       void sum_of_squares(bool);
+      void linearization_iterations(bool);
       void connected_network(bool);
       void disconnected_network(bool);
       void standard_deviation(bool);

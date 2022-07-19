@@ -82,6 +82,7 @@ void LocalNetworkAdjustmentResultsData::init()
   project_equations.defect = 0;
   project_equations.sum_of_squares = 0;
   project_equations.connected_network = true;
+  project_equations.linearization_iterations = 0;
 
   standard_deviation.apriori = 0;
   standard_deviation.aposteriori = 0;

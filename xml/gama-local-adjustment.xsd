@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<xs:schema version="1.00"
+<xs:schema version="1.01"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns="http://www.gnu.org/software/gama/gama-local-adjustment"
   targetNamespace="http://www.gnu.org/software/gama/gama-local-adjustment"
@@ -132,6 +132,7 @@
         <xs:element ref="degrees-of-freedom"/>
         <xs:element ref="defect"/>
         <xs:element ref="sum-of-squares"/>
+        <xs:element ref="linearization-iterations" minOccurs="0" maxOccurs="1" />
         <xs:choice>
           <xs:element ref="connected-network"/>
           <xs:element ref="disconnected-network"/>
@@ -527,6 +528,7 @@
   <xs:element name="flt" type="xs:double"/>
   <xs:element name="ind" type="xs:nonNegativeInteger"/>
   <xs:element name="h-diffs" type="xs:nonNegativeInteger"/>
+  <xs:element name="linearization-iterations" type="xs:nonNegativeInteger" />
   <xs:element name="lower" type="xs:double"/>
   <xs:element name="obs" type="xs:double"/>
   <xs:element name="probability" type="xs:double"/>

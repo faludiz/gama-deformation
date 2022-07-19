@@ -531,7 +531,10 @@ void LocalNetworkXML::equations_summary(std::ostream& out) const
   out.setf(ios_base::scientific, ios_base::floatfield);
   out.precision(7);
   tagnl(out, "sum-of-squares", netinfo->trans_VWV());
-
+  if (netinfo->linearization_iterations())
+    {
+      tagnl(out, "linearization-iterations", netinfo->linearization_iterations());
+    }
   if (netinfo->connected_network())
     out << "   <connected-network/>\n";
   else

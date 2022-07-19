@@ -93,6 +93,7 @@ namespace GNU_gama
       int    defect;
       double sum_of_squares;
       bool   connected_network;
+      int    linearization_iterations;
 
     } project_equations;
 

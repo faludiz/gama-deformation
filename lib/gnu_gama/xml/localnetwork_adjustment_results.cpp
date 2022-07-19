@@ -74,6 +74,7 @@ void LocalNetworkAdjustmentResults::init()
   project_equations.defect = 0;
   project_equations.sum_of_squares = 0;
   project_equations.connected_network = true;
+  project_equations.linearization_iterations = 0;
 
   standard_deviation.apriori = 0;
   standard_deviation.aposteriori = 0;
@@ -209,6 +210,9 @@ void LocalNetworkAdjustmentResults::Parser::init()
   tagfun[s_defect_end                         ][t_sum_of_squares                 ] = &Parser::sum_of_squares;
   tagfun[s_sum_of_squares_end                 ][t_connected_network              ] = &Parser::connected_network;
   tagfun[s_sum_of_squares_end                 ][t_disconnected_network           ] = &Parser::disconnected_network;
+  tagfun[s_sum_of_squares_end                 ][t_linearization_iterations       ] = &Parser::linearization_iterations;
+  tagfun[s_linearization_iterations_end       ][t_connected_network              ] = &Parser::connected_network;
+  tagfun[s_linearization_iterations_end       ][t_disconnected_network           ] = &Parser::disconnected_network;
   tagfun[s_project_equations_end              ][t_standard_deviation             ] = &Parser::standard_deviation;
   tagfun[s_standard_deviation                 ][t_apriori                        ] = &Parser::apriori;
   tagfun[s_apriori_end                        ][t_aposteriori                    ] = &Parser::aposteriori;
@@ -396,6 +400,7 @@ int LocalNetworkAdjustmentResults::Parser::tag(const char* c)
       if (!strcmp(c, "left"                      )) return t_left;
       if (!strcmp(c, "lower"                     )) return t_lower;
       if (!strcmp(c, "lineNumber"                )) return t_line_number;
+      if (!strcmp(c, "linearization-iterations"   )) return t_linearization_iterations;
       break;
     case 'n':
       if (!strcmp(c, "network-general-parameters")) return t_network_general_parameters;
@@ -1037,6 +1042,21 @@ void LocalNetworkAdjustmentResults::Parser::sum_of_squares(bool start)
     {
       adj->project_equations.sum_of_squares = get_float();
       set_state(s_sum_of_squares_end);
+    }
+}
+
+
+void LocalNetworkAdjustmentResults::Parser::linearization_iterations(bool start)
+{
+  if (start)
+    {
+      stack.push(&Parser::linearization_iterations);
+      set_state(s_linearization_iterations);
+    }
+  else
+    {
+      adj->project_equations.linearization_iterations = get_int();
+      set_state(s_linearization_iterations_end);
     }
 }
 
