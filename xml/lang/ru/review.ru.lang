@@ -312,8 +312,8 @@
    />
 
 <e id="T_GaMa_tstlin_obs_r_diff"
-   EN="      observed     r        difference"
-   ru="      набл-мое     r         разница  " />
+   EN="      observed     v        difference"
+   ru="      набл-мое     v         разница  " />
 
 <e id="T_GaMa_tstlin_header1"
    EN="====== value == [mm|cc] == [cc] == [mm] =\n\n"

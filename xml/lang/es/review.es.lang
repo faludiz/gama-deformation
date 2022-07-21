@@ -312,8 +312,8 @@
    es="Diferencias en las observaciones ajustadas entre los residuos y las coordenadas ajustadas" />
 
 <e id="T_GaMa_tstlin_obs_r_diff"
-   EN="      observed     r        difference"
-   es="      observ.      r        diferencia" />
+   EN="      observed     v        difference"
+   es="      observ.      v        diferencia" />
 
 <e id="T_GaMa_tstlin_header1"
    EN="====== value == [mm|cc] == [cc] == [mm] =\n\n"
