@@ -161,6 +161,7 @@
         <xs:choice>
           <xs:element ref="failed"/>
           <xs:element ref="passed"/>
+          <xs:element ref="not-applicable"/>
         </xs:choice>
         <xs:element ref="confidence-scale"/>
       </xs:sequence>
@@ -260,6 +261,9 @@
     <xs:complexType/>
   </xs:element>
   <xs:element name="passed">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="not-applicable">
     <xs:complexType/>
   </xs:element>
 

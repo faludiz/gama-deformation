@@ -223,6 +223,7 @@ void LocalNetworkAdjustmentResults::Parser::init()
   tagfun[s_lower_end                          ][t_upper                          ] = &Parser::upper;
   tagfun[s_upper_end                          ][t_passed                         ] = &Parser::passed;
   tagfun[s_upper_end                          ][t_failed                         ] = &Parser::failed;
+  tagfun[s_upper_end                          ][t_not_applicable                 ] = &Parser::not_applicable;
   tagfun[s_passed_end                         ][t_confidence_scale               ] = &Parser::confidence_scale;
   tagfun[s_network_processing_summary_end     ][t_coordinates                    ] = &Parser::coordinates;
   tagfun[s_coordinates                        ][t_fixed                          ] = &Parser::fixed;
@@ -400,11 +401,12 @@ int LocalNetworkAdjustmentResults::Parser::tag(const char* c)
       if (!strcmp(c, "left"                      )) return t_left;
       if (!strcmp(c, "lower"                     )) return t_lower;
       if (!strcmp(c, "lineNumber"                )) return t_line_number;
-      if (!strcmp(c, "linearization-iterations"   )) return t_linearization_iterations;
+      if (!strcmp(c, "linearization-iterations"  )) return t_linearization_iterations;
       break;
     case 'n':
       if (!strcmp(c, "network-general-parameters")) return t_network_general_parameters;
       if (!strcmp(c, "network-processing-summary")) return t_network_processing_summary;
+      if (!strcmp(c, "not-applicable"            )) return t_not_applicable;
       break;
     case 'o':
       if (!strcmp(c, "obs"                       )) return t_obs;
@@ -1226,6 +1228,7 @@ void LocalNetworkAdjustmentResults::Parser::passed(bool start)
     {
       check_and_clear_data();
       adj->standard_deviation.passed = true;
+      adj->standard_deviation.not_applicable = false;
       set_state(s_passed_end);
     }
 }
@@ -1242,6 +1245,24 @@ void LocalNetworkAdjustmentResults::Parser::failed(bool start)
     {
       check_and_clear_data();
       adj->standard_deviation.passed = false;
+      adj->standard_deviation.not_applicable = false;
+      set_state(s_passed_end);
+    }
+}
+
+
+void LocalNetworkAdjustmentResults::Parser::not_applicable(bool start)
+{
+  if (start)
+    {
+      stack.push(&Parser::not_applicable);
+      set_state(s_not_applicable);
+    }
+  else
+    {
+      check_and_clear_data();
+      adj->standard_deviation.passed = false;
+      adj->standard_deviation.not_applicable = true;
       set_state(s_passed_end);
     }
 }

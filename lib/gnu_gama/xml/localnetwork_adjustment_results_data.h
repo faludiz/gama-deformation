@@ -103,10 +103,11 @@ namespace GNU_gama
       double aposteriori;
       bool   using_aposteriori;
       double probability;
-      double ratio;
-      double lower;
-      double upper;
-      bool   passed;
+      double ratio;           // aposteriori/apriori test
+      double lower;           // Chi square hypothesis interval
+      double upper;           //
+      bool   passed;          // irrelevant if not applicable
+      bool   not_applicable;  // zero degrees of freedom
       double confidence_scale;
 
     } standard_deviation;

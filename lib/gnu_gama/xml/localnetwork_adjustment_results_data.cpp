@@ -92,6 +92,7 @@ void LocalNetworkAdjustmentResultsData::init()
   standard_deviation.lower = 0;
   standard_deviation.upper = 0;
   standard_deviation.passed = false;
+  standard_deviation.not_applicable = true;
   standard_deviation.confidence_scale = 0;
 
   fixed_points      .clear();

@@ -162,6 +162,8 @@ namespace GNU_gama
           s_passed_end,
           s_failed,
           s_failed_end,
+          s_not_applicable,
+          s_not_applicable_end,
           s_confidence_scale,
           s_confidence_scale_end,
           s_coordinates,
@@ -293,6 +295,7 @@ namespace GNU_gama
           t_lower,
           t_network_general_parameters,
           t_network_processing_summary,
+          t_not_applicable,
           t_obs,
           t_observation,
           t_observations,
@@ -404,6 +407,7 @@ namespace GNU_gama
       void upper(bool);
       void passed(bool);
       void failed(bool);
+      void not_applicable(bool);
       void confidence_scale(bool);
       void coordinates(bool);
       void fixed(bool);
