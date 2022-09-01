@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<xs:schema version="1.01"
+<xs:schema version="1.02"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns="http://www.gnu.org/software/gama/gama-local-adjustment"
   targetNamespace="http://www.gnu.org/software/gama/gama-local-adjustment"

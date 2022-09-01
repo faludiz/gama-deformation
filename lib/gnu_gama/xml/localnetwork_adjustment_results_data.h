@@ -1,5 +1,5 @@
 /* GNU Gama -- adjustment of geodetic networks
-   Copyright (C) 2013, 2014  Ales Cepek <cepek@gnu.org>
+   Copyright (C) 2013, 2014, 2022  Ales Cepek <cepek@gnu.org>
 
    This file is part of the GNU Gama C++ library.
 
@@ -97,6 +97,8 @@ namespace GNU_gama
 
     } project_equations;
 
+    enum class Status {failed, not_applicable, passed};
+
     struct
     {
       double apriori;
@@ -106,8 +108,7 @@ namespace GNU_gama
       double ratio;           // aposteriori/apriori test
       double lower;           // Chi square hypothesis interval
       double upper;           //
-      bool   passed;          // irrelevant if not applicable
-      bool   not_applicable;  // zero degrees of freedom
+      Status status {Status::not_applicable};
       double confidence_scale;
 
     } standard_deviation;

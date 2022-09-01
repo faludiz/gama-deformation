@@ -1,5 +1,5 @@
 /* GNU Gama -- adjustment of geodetic networks
-   Copyright (C) 2013, 2014  Ales Cepek <cepek@gnu.org>
+   Copyright (C) 2013, 2014, 2022  Ales Cepek <cepek@gnu.org>
 
    This file is part of the GNU Gama C++ library.
 
@@ -91,8 +91,7 @@ void LocalNetworkAdjustmentResultsData::init()
   standard_deviation.ratio = 0;
   standard_deviation.lower = 0;
   standard_deviation.upper = 0;
-  standard_deviation.passed = false;
-  standard_deviation.not_applicable = true;
+  standard_deviation.status = Status::not_applicable;
   standard_deviation.confidence_scale = 0;
 
   fixed_points      .clear();
