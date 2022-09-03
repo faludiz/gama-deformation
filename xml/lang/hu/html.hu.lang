@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<entries>
+
+<e id="T_HTML_adjusted"
+   EN="adjusted"
+   hu="kiegyenlített" />
+   
+<e id="T_HTML_adjusted_observations"
+   EN="Adjusted observations"
+   hu="Kiegyenlített mérési eredmények" />
+   
+<e id="T_HTML_approximate"
+   EN="approximate" 
+   hu="előzetes" />
+   
+<e id="T_HTML_cc"
+   EN="[cc]"
+   hu="[cc]" />
+   
+<e id="T_HTML_ss"
+   EN="[ss]"
+   hu="[mp]" />
+   
+<e id="T_HTML_d"
+   EN="[d]"
+   hu="[f]" />
+   
+<e id="T_HTML_confidence"
+   EN="confidence"
+   hu="konfidencia" />
+   
+<e id="T_HTML_correction"
+   EN="correction"
+   hu="javítás" />
+   
+<e id="T_HTML_e_obs_adj"
+   EN="e&amp;minus;obs&amp;nbsp;e&amp;minus;adj"
+   hu="e&amp;minus;mért&amp;nbsp;e&amp;minus;kiegy" />
+   
+<e id="T_HTML_f_proc"
+   EN="f[%]"
+   hu="f[%]" />
+   
+<e id="T_HTML_g"
+   EN="[g]"
+   hu="[g]" />
+   
+<e id="T_HTML_m"
+   EN="[m]"
+   hu="[p]" />
+   
+<e id="T_HTML_mean_error_ellipse"
+   EN="mean error ellipse"
+   hu="középhiba ellipszis" />
+   
+<e id="T_HTML_md"
+   EN="[m|d]"
+   hu="[p|d]" />
+   
+<e id="T_HTML_mg"
+   EN="[m|g]"
+   hu="[p|g]" />
+   
+<e id="T_HTML_mm"
+   EN="[mm]"
+   hu="[mm]" />
+   
+<e id="T_HTML_mmcc"
+   EN="[mm|cc]"
+   hu="[mm|cc]" />
+   
+<e id="T_HTML_mmss"
+   EN="[mm|ss]"
+   hu="[mm|mp]" />
+   
+<e id="T_HTML_mp"
+   EN="mp"
+   hu="mp" />
+   
+<e id="T_HTML_mxy"
+   EN="mxy"
+   hu="mxy" />
+   
+<e id="T_HTML_observations"
+   EN="Observations" 
+   hu="Mérési eredmények"/>
+   
+<e id="T_HTML_observed"
+   EN="observed"
+   hu="mért" />
+   
+<e id="T_HTML_points"
+   EN="Points"
+   hu="Pontok" />
+   
+<e id="T_HTML_rejected"
+   EN="Rejected"
+   hu="Elutasítva" />
+   
+<e id="T_HTML_r"
+   EN="v"
+   hu="v" />
+   
+<e id="T_HTML_rstud"
+   EN="|v'|"
+   hu="|v'|" />
+   
+<e id="T_HTML_stddev_confi"
+   EN="std.dev&amp;nbsp;conf.i."
+   hu="k.hiba&amp;nbsp;konf.i." />
+   
+<e id="T_HTML_value"
+   EN="value"
+   hu="érték" />
+   
+<e id="T_HTML_value_d"
+   EN="value [d]"
+   hu="érték [f]" />
+   
+<e id="T_HTML_value_g"
+   EN="value [g]"
+   hu="érték [g]" />
+
+</entries>
