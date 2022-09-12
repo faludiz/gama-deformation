@@ -74,7 +74,7 @@
   Push the tag to the repository (set the origin repo to ssh first if needed):
 
       # git remote set-url origin ssh://user@git.sv.gnu.org/srv/git/gama.git
-      git push origin --tags
+      git push origin <tag_name>
 
    where *user* is your login name.
 
