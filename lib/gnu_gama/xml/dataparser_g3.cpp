@@ -849,6 +849,13 @@ int DataParser::g3_obs_cov(const char *name)
 
   if (!(istr >> d >> b))  return error("### bad cov-mat");
 
+  if (d <=0 || b < 0 || b >=d)
+    {
+      std::ostringstream bad_covmat_dim;
+      bad_covmat_dim << "### bad cov-mat / dim " << d << " band " << b;
+      return error(bad_covmat_dim.str());
+    }
+
   DataParser_g3::Cov cov(d, b);
   cov.set_zero();
   for (int i=1; i<=d; i++)          // upper triangular matrix by rows
@@ -1302,4 +1309,3 @@ int DataParser::g3_obs_angle(const char *name)
 
   return error("### bad <angle>");
 }
-
