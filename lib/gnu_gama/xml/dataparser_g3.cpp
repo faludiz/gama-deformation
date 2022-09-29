@@ -866,6 +866,16 @@ int DataParser::g3_obs_cov(const char *name)
 
   if (!pure_data(istr)) return error("### bad cov-mat / redundant data");
 
+  try
+    {
+      DataParser_g3::Cov tmp = cov;
+      tmp.cholDec();
+    }
+  catch (GNU_gama::Exception::matvec exc)
+    {
+      return error("### bad cov-mat / matrix is not positive definite");
+    }
+
   text_buffer.clear();
   g3->cov_list.push_back(cov);
 
