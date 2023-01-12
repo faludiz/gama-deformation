@@ -22,7 +22,7 @@ int main()
 
   for (int b=0; b<=90; b++)
     for (int l=0; l<=180; l += 10)
-    for (int h=0; h<=7000; h++)
+    for (int h=0; h<=7000; h += 10)
       {
         double X, Y, Z;
         ellipsoid.blh2xyz(int2rad(b),int2rad(l),double(h), X,Y,Z);
