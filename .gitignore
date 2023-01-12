@@ -54,6 +54,7 @@ tests/gama-local/scripts/check_xml_coordinates
 tests/gama-local/scripts/sqlite_init_db
 tests/gama-local/xmllint-gama-local-xsd
 tests/gama-local/xmllint-gama-local-adjustment-xsd
+tests/gama-g3/src/check_ellipsoid_xyz2blh
 tests/krumm/cmp_xml_file
 #
 doc/version.texi
