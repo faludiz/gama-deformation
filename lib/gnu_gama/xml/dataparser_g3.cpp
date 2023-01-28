@@ -93,6 +93,14 @@ void DataParser::init_g3()
        s_g3_const_tol_abs, 0, s_g3_const,
        nullptr, &DataParser::add_text, &DataParser::g3_const_tol_abs);
 
+  init(s_g3_const, t_ref_aposteriori,
+       s_g3_const_ref_aposteriori, 0, s_g3_const,
+       nullptr, nullptr, &DataParser::g3_const_ref_aposteriori);
+
+  init(s_g3_const, t_ref_apriori,
+       s_g3_const_ref_apriori, 0, s_g3_const,
+       nullptr, nullptr, &DataParser::g3_const_ref_apriori);
+
   init(s_g3_const, t_ang_degrees,
        s_g3_const_ang, 0, s_g3_const,
        nullptr, nullptr, &DataParser::g3_const_ang_degrees);
@@ -1262,6 +1270,22 @@ int DataParser::g3_const_ellipsoid_inv_f(const char *name)
    }
 
   return error("### bad <ellipsoid> <a> <inv-f>");
+}
+
+int DataParser::g3_const_ref_apriori(const char *name)
+{
+  text_buffer.clear();
+  g3->model->set_ref_stdev_apriori();
+
+  return end_tag(name);
+}
+
+int DataParser::g3_const_ref_aposteriori(const char *name)
+{
+  text_buffer.clear();
+  g3->model->set_ref_stdev_aposteriori();
+
+  return end_tag(name);
 }
 
 int DataParser::g3_const_ang_degrees(const char *name)

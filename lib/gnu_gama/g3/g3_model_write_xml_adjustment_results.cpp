@@ -196,7 +196,7 @@ void Model::write_xml_adjustment_results_statistics(std::ostream& out)
       << sigma_aposteriori <<" </aposteriori-variance>\n";
 
   out << "<variance-factor-used>  ";
-  if (actual_sd == aposteriori)
+  if (ref_stdev == aposteriori)
     out << "aposteriori";
   else
     out << "    apriori";
