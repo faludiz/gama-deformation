@@ -272,8 +272,8 @@ void Model::write_xml_adjusted_stdev(const char* prefix,
   const int   prec  = int( out.precision(3) );
   const int   width = 8;
 
-  int    cluster_index = obs->cluster_index + obs_dim_index;
-  double obs_stdev     = obs->cluster->stdDev(cluster_index);
+  int    obs_index = obs->cluster_index*obs->dimension() + obs_dim_index;
+  double obs_stdev = obs->cluster->stdDev(obs_index);
 
   // double res_stdev     = -1;
 
