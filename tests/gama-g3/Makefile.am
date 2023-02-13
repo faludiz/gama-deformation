@@ -22,7 +22,8 @@ TESTS = $(TESTSA) $(TESTXML)
 
 SUBDIRS = input src
 
-INPUT_FILES = demo-g3-01 demo-g3-02 demo-g3-03
+INPUT_FILES = demo-g3-01 demo-g3-02 demo-g3-03 \
+              ghilani-gnss-v1 ghilani-gnss-v3 ghilani-gnss-v3
 
 G3_SRC     = $(srcdir)/src
 G3_INPUT   = $(srcdir)/input
