@@ -1,3 +1,30 @@
+2023-02-16   Ales Cepek <cepek@gnu.org>
+
+	Maintenance release gama-2.24
+
+	* new testing data to gama-g3 test suite
+
+	* Fixed a bug in gama-g3 adjustment xml output of vectors
+
+	* Fixed the definition of reference standard deviation in the
+	gama-g3 input XML
+
+	* xml/gnu-gama-data.xsd version 1.01 new tags
+	<reference-variance-apriory/> and
+	<reference-variance-aposteriori/>
+
+	* Added a test on conversion of coordinates XYZ to ellipsoidal BLH
+	and back Add an implicit constructor to the Ellipsoid class
+	(implicit ellipsoid is SWG 84) and enable the next iteration in
+	xyz2blh(), which improves the transformation XYZ to BLS from 1e-7
+	to 1e-9 meters. Added a test on conversion from BLH to XYZ to the
+	CMake build
+
+	* Added test on positive definite covariance matrix in input XML
+	and test on covariance matrix dimension and bandwidth in
+	DataParser_g3
+
+
 2022-06-30   Ales Cepek <cepek@gnu.org>
 
 	New release 2.20
