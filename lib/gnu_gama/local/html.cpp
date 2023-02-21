@@ -1,5 +1,6 @@
 /* GNU Gama C++ library
-   Copyright (C) 2012, 2013, 2014, 2016, 2018, 2022  Ales Cepek <cepek@gnu.org>
+   Copyright (C) 2012, 2013, 2014, 2016, 2018, 2022, 2023
+   Ales Cepek <cepek@gnu.org>
 
    This file is part of the GNU Gama C++ library.
 
@@ -1045,8 +1046,8 @@ void GamaLocalHTML::htmlUnknowns()
 
             if ((*i).second.fixed_xy())
               {
-                out << tdRight((*i).second.x(), 'F', 3, 0, N_fixed)
-                    << tdRight((*i).second.y()*y_sign, 'F', 3, 0, N_fixed);
+                out << tdRight((*i).second.x(), 'F', 5, 0, N_fixed)
+                    << tdRight((*i).second.y()*y_sign, 'F', 5, 0, N_fixed);
               }
             if ((*i).second.fixed_z())
               {

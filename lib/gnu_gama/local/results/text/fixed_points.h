@@ -1,6 +1,6 @@
 /*
     GNU Gama -- adjustment of geodetic networks
-    Copyright (C) 1999  Ales Cepek <cepek@fsv.cvut.cz>
+    Copyright (C) 1999, 2023  Ales Cepek <cepek@fsv.cvut.cz>
 
     This file is part of the GNU Gama C++ library.
 
@@ -32,6 +32,8 @@ namespace GNU_gama { namespace local {
 template <typename OutStream>
 void FixedPoints(GNU_gama::local::LocalNetwork* IS, OutStream& out)
 {
+  const int fixed_padd = 2; // fixed points precision 3 -> 5
+
   using namespace std;
   using namespace GNU_gama::local;
 
@@ -58,9 +60,9 @@ void FixedPoints(GNU_gama::local::LocalNetwork* IS, OutStream& out)
     {
       out.width(13);
       out << "x   ";
-      out.width(13+2);
+      out.width(13+fixed_padd);
       out << "y   ";
-      table += 2*13 + 2;
+      table += 2*13 + 2*fixed_padd;
     }
   if (pocpevv)
     {
@@ -70,7 +72,7 @@ void FixedPoints(GNU_gama::local::LocalNetwork* IS, OutStream& out)
           table += 2;
         }
       out.width(13);
-      out << "z   ";
+      out << (pocpevb ? "z   " : "z     ");
       table += 13;
     }
   out << '\n';
@@ -90,8 +92,8 @@ void FixedPoints(GNU_gama::local::LocalNetwork* IS, OutStream& out)
           }
         if ((*i).second.fixed_xy())
           {
-            out.precision(3);
-            out.width(13);
+            out.precision(3+fixed_padd);
+            out.width(13+fixed_padd);
             out << (*i).second.x();
             out << "  ";
             out.width(13);
@@ -101,10 +103,10 @@ void FixedPoints(GNU_gama::local::LocalNetwork* IS, OutStream& out)
           {
             if (pocpevb && !(*i).second.fixed_xy())
               {
-                out.width(2*13+2);
+                out.width(2*13);
                 out << " ";
               }
-            out.precision(3);
+            out.precision(3+fixed_padd);
             if (pocpevb)  out << "  ";
             out.width(13);
             out << (*i).second.z();
@@ -124,7 +126,3 @@ void FixedPoints(GNU_gama::local::LocalNetwork* IS, OutStream& out)
 }}
 
 #endif
-
-
-
-
