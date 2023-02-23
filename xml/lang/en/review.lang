@@ -130,6 +130,9 @@
 <e id="T_GaMa_statan_with_confidence_level"
    en="- with confidence level " />
 
+<e id="T_GaMa_statan_confidence_coefficient"
+   en="Confidence coefficient:" />
+
 <e id="T_GaMa_Ratio_empirical_to_apriori"
    en="Ratio m0\' aposteriori / m0 apriori: " />
 

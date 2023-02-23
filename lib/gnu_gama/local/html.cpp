@@ -926,7 +926,7 @@ void GamaLocalHTML::htmlInfo()
                 }
             }
           out << "<tr id='confidence_scale'>"
-              << tdLeft("Confidence coefficient:")
+              << tdLeft(T_GaMa_statan_confidence_coefficient)
               << "<td></td>"
               << "<td align='left'>"
               << double2str(lnet->conf_int_coef(), 'F', 3)

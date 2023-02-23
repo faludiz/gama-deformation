@@ -173,6 +173,10 @@
    EN="- with confidence level "
    cz="- s konfidenční pravděpodobností " />
 
+<e id="T_GaMa_statan_confidence_coefficient"
+   EN="Confidence coefficient:"
+   cz="Konfidenční koeficient:" />
+
 <e id="T_GaMa_Ratio_empirical_to_apriori"
    EN="Ratio m0\' aposteriori / m0 apriori: "
    cz="Poměr m0\' aposteriorní / m0 apriorní: " />

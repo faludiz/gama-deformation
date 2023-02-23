@@ -209,6 +209,7 @@ extern const char* T_GaMa_resobs_weak_control;
 extern const char* T_GaMa_s_distance;
 extern const char* T_GaMa_solution_ended_with_error;
 extern const char* T_GaMa_standpoint;
+extern const char* T_GaMa_statan_confidence_coefficient;
 extern const char* T_GaMa_statan_with_apriori_standard_deviation;
 extern const char* T_GaMa_statan_with_confidence_level;
 extern const char* T_GaMa_statan_with_empirical_standard_deviation;

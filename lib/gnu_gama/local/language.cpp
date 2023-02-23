@@ -207,6 +207,7 @@ const char* T_GaMa_resobs_weak_control = T_language_cpp_internal_error;
 const char* T_GaMa_s_distance = T_language_cpp_internal_error;
 const char* T_GaMa_solution_ended_with_error = T_language_cpp_internal_error;
 const char* T_GaMa_standpoint = T_language_cpp_internal_error;
+const char* T_GaMa_statan_confidence_coefficient = T_language_cpp_internal_error;
 const char* T_GaMa_statan_with_apriori_standard_deviation = T_language_cpp_internal_error;
 const char* T_GaMa_statan_with_confidence_level = T_language_cpp_internal_error;
 const char* T_GaMa_statan_with_empirical_standard_deviation = T_language_cpp_internal_error;
@@ -478,6 +479,7 @@ void set_gama_language(gama_language lang)
 	T_GaMa_s_distance=" slope ";
 	T_GaMa_solution_ended_with_error="GNU Gama - solution ended with error!";
 	T_GaMa_standpoint="standpoint";
+	T_GaMa_statan_confidence_coefficient="Confidence coefficient:";
 	T_GaMa_statan_with_apriori_standard_deviation="- with apriori standard deviation ";
 	T_GaMa_statan_with_confidence_level="- with confidence level ";
 	T_GaMa_statan_with_empirical_standard_deviation="- with aposteriori standard deviation ";
@@ -745,6 +747,7 @@ void set_gama_language(gama_language lang)
 	T_GaMa_s_distance=" incl. ";
 	T_GaMa_solution_ended_with_error="GNU Gama - la solució ha acabat amb errors";
 	T_GaMa_standpoint="estació";
+	T_GaMa_statan_confidence_coefficient="Confidence coefficient:";
 	T_GaMa_statan_with_apriori_standard_deviation="- amb desviació estàndard a priori ";
 	T_GaMa_statan_with_confidence_level="- amb nivell de confiança ";
 	T_GaMa_statan_with_empirical_standard_deviation="- amb desviació estàndard a posteriori ";
@@ -1012,6 +1015,7 @@ void set_gama_language(gama_language lang)
 	T_GaMa_s_distance=" šikmá ";
 	T_GaMa_solution_ended_with_error="GNU Gama - výpočet skončil chybou!";
 	T_GaMa_standpoint="stanovisko";
+	T_GaMa_statan_confidence_coefficient="Konfidenční koeficient:";
 	T_GaMa_statan_with_apriori_standard_deviation="- s apriorní jednotkovou střední chybou ";
 	T_GaMa_statan_with_confidence_level="- s konfidenční pravděpodobností ";
 	T_GaMa_statan_with_empirical_standard_deviation="- s aposteriorní jednotkovou střední chybou ";
@@ -1279,6 +1283,7 @@ void set_gama_language(gama_language lang)
 	T_GaMa_s_distance=" slope ";
 	T_GaMa_solution_ended_with_error="GNU Gama - oplossing beëindigd met fouten!";
 	T_GaMa_standpoint="standpunt";
+	T_GaMa_statan_confidence_coefficient="Confidence coefficient:";
 	T_GaMa_statan_with_apriori_standard_deviation="- met a priori standaardafwijking ";
 	T_GaMa_statan_with_confidence_level="- met betrouwbaarheidsniveau ";
 	T_GaMa_statan_with_empirical_standard_deviation="- met a posteriori standaardafwijking ";
@@ -1546,6 +1551,7 @@ void set_gama_language(gama_language lang)
 	T_GaMa_s_distance=" incl. ";
 	T_GaMa_solution_ended_with_error="¡GNU Gama - la solución ha terminado con un error!";
 	T_GaMa_standpoint="estación";
+	T_GaMa_statan_confidence_coefficient="Confidence coefficient:";
 	T_GaMa_statan_with_apriori_standard_deviation="- con desviación típica a priori ";
 	T_GaMa_statan_with_confidence_level="- con nivel de confianza ";
 	T_GaMa_statan_with_empirical_standard_deviation="- con desviación típica a posteriori ";
@@ -1813,6 +1819,7 @@ void set_gama_language(gama_language lang)
 	T_GaMa_s_distance=" etäisyys ";
 	T_GaMa_solution_ended_with_error="GNU Gama - ratkaisu päättyi virheeseen!";
 	T_GaMa_standpoint="asemapiste";
+	T_GaMa_statan_confidence_coefficient="Confidence coefficient:";
 	T_GaMa_statan_with_apriori_standard_deviation="- apriori keskihajontaa ";
 	T_GaMa_statan_with_confidence_level="- luottamustasolla ";
 	T_GaMa_statan_with_empirical_standard_deviation="- aposteriori keskihajontaa ";
@@ -2080,6 +2087,7 @@ void set_gama_language(gama_language lang)
 	T_GaMa_s_distance=" pente ";
 	T_GaMa_solution_ended_with_error="GNU Gama - la résolution s\'est terminée par une erreur!";
 	T_GaMa_standpoint="station";
+	T_GaMa_statan_confidence_coefficient="Confidence coefficient:";
 	T_GaMa_statan_with_apriori_standard_deviation="- avect un écart-type a priori de ";
 	T_GaMa_statan_with_confidence_level="- avec comme seuil de confiance ";
 	T_GaMa_statan_with_empirical_standard_deviation="- avec un écart-type a posteriori de ";
@@ -2347,6 +2355,7 @@ void set_gama_language(gama_language lang)
 	T_GaMa_s_distance=" ferde ";
 	T_GaMa_solution_ended_with_error="GNU Gama - hiba a megoldás közben!";
 	T_GaMa_standpoint="álláspont";
+	T_GaMa_statan_confidence_coefficient="Confidence coefficient:";
 	T_GaMa_statan_with_apriori_standard_deviation="- apriori középhiba ";
 	T_GaMa_statan_with_confidence_level="- konfidencia szint ";
 	T_GaMa_statan_with_empirical_standard_deviation="- aposteriori középhiba ";
@@ -2614,6 +2623,7 @@ void set_gama_language(gama_language lang)
 	T_GaMa_s_distance=" накл. ";
 	T_GaMa_solution_ended_with_error="GNU Gama - решение закончилось ошибкой!";
 	T_GaMa_standpoint="тчк стояния";
+	T_GaMa_statan_confidence_coefficient="Confidence coefficient:";
 	T_GaMa_statan_with_apriori_standard_deviation="- с apriori стандартом (средним квадратическим отклонением) ";
 	T_GaMa_statan_with_confidence_level="- с доверительным интервалом ";
 	T_GaMa_statan_with_empirical_standard_deviation="- с aposteriori стандартом (средним квадратическим отклонением) ";
@@ -2881,6 +2891,7 @@ void set_gama_language(gama_language lang)
 	T_GaMa_s_distance=" накл. ";
 	T_GaMa_solution_ended_with_error="GNU Gama - розв'язок закінчився з помилкою!";
 	T_GaMa_standpoint="тчк стояння";
+	T_GaMa_statan_confidence_coefficient="Confidence coefficient:";
 	T_GaMa_statan_with_apriori_standard_deviation="- з апріорі стандартом (середнім квадратичним відхиленням) ";
 	T_GaMa_statan_with_confidence_level="- з довірчим інтервалом ";
 	T_GaMa_statan_with_empirical_standard_deviation="- з апостеріорі стандартом (середнім квадратичним відхиленням) ";
@@ -3148,6 +3159,7 @@ void set_gama_language(gama_language lang)
 	T_GaMa_s_distance=" 斜距 ";
 	T_GaMa_solution_ended_with_error="GNU Gama - 求解出错!";
 	T_GaMa_standpoint="测站点";
+	T_GaMa_statan_confidence_coefficient="Confidence coefficient:";
 	T_GaMa_statan_with_apriori_standard_deviation="- 用验前中误差";
 	T_GaMa_statan_with_confidence_level="- 用置信度";
 	T_GaMa_statan_with_empirical_standard_deviation="- 用验后中误差";
