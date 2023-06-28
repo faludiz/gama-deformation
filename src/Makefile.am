@@ -1,4 +1,5 @@
 GAMA_LOCAL = gama-local \
+             gama-local-deformation \
              gama-local-xml2txt \
              gama-local-xml2sql \
              gama-local-gkf2yaml \
@@ -17,6 +18,10 @@ bin_PROGRAMS = $(GAMA_LOCAL) $(GAMA_G3) $(GAMA_YAML)
 gama_local_SOURCES = gama-local.cpp
 gama_local_LDADD   = $(top_builddir)/lib/libgama.a
 gama_local_CPPFLAGS = -I $(top_srcdir)/lib
+
+gama_local_deformation_SOURCES = gama-local-deformation.cpp
+gama_local_deformation_LDADD   = $(top_builddir)/lib/libgama.a
+gama_local_deformation_CPPFLAGS = -I $(top_srcdir)/lib
 
 gama_local_xml2txt_SOURCES = gama-local-xml2txt.cpp
 gama_local_xml2txt_LDADD   = $(top_builddir)/lib/libgama.a
