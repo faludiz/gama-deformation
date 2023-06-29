@@ -12,7 +12,9 @@
 #include <gnu_gama/xml/localnetwork_adjustment_results.h>
 using Results = GNU_gama::LocalNetworkAdjustmentResults;
 
-//#define DEBUG
+#include <matvec/bandmat.h>
+
+#define DEBUG
 
 int idw {1}, indw {1};
 
@@ -199,10 +201,14 @@ int main(int argc, char *argv[])
             adjdiff[id] = rec;
         }
 
-    std::cout.setf(std::ios_base::fixed, std::ios_base::floatfield);
-    std::cout.precision(5);
+    std::cout << "# point id / cov mat indexes /"
+                 " x, y, z shifts (epoch2 - epoch1) /"
+                 " epoch1  x, y, z\n\n";
 
     int prec  {5};
+    std::cout.setf(std::ios_base::fixed, std::ios_base::floatfield);
+    std::cout.precision(prec);
+
     int indxw {0}, indyw {0}, indzw {0};
     for (auto& rec : adjdiff)
     {
@@ -250,4 +256,21 @@ int main(int argc, char *argv[])
 
                   << std::endl;
     }
+
+    std::cout << "\n\n# deformation covariance matrix of x, y, z shifts\n\n";
+
+#ifdef DEBUG
+    std::cout << epoch1->cov << "\n\n" << epoch2->cov << "\n\n";
+#endif
+
+    GNU_gama::CovMat<> C(cov_index, cov_index-1);
+    for (int i=1; i<=cov_index; i++)
+        for (int j=i; j<=cov_index; j++)
+        {
+            C(i,j) = epoch1->cov(t1[i],t1[j]) + epoch2->cov(t2[i],t2[j]);
+        }
+
+    std::cout << C;
+
+
 }
