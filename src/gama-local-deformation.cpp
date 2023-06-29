@@ -14,7 +14,7 @@ using Results = GNU_gama::LocalNetworkAdjustmentResults;
 
 #include <matvec/bandmat.h>
 
-#define DEBUG
+// #define DEBUG
 
 int idw {1}, indw {1};
 
@@ -201,7 +201,7 @@ int main(int argc, char *argv[])
             adjdiff[id] = rec;
         }
 
-    std::cout << "# point id / cov mat indexes /"
+    std::cout << "# point id / covariance indexes /"
                  " x, y, z shifts (epoch2 - epoch1) /"
                  " epoch1  x, y, z\n\n";
 
@@ -271,6 +271,4 @@ int main(int argc, char *argv[])
         }
 
     std::cout << C;
-
-
 }
