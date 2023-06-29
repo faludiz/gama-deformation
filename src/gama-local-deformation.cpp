@@ -1,13 +1,20 @@
+#include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <sstream>
 #include <memory>
 #include <map>
+
+#include <iomanip>
 
 #include <gnu_gama/xml/localnetwork_adjustment_results.h>
 using Results = GNU_gama::LocalNetworkAdjustmentResults;
 
-#define DEBUG
+//#define DEBUG
+
+int idw {1}, indw {1};
 
 struct Rec {
     std::string id;
@@ -44,13 +51,16 @@ struct Rec2 {
 #ifdef DEBUG
 std::ostream& operator<<(std::ostream& os, const Rec2& rec)
 {
+    using std::setw;
     os << "  " << rec.id << "  "
-       << rec.indx1 << " " << rec.x1 << " "
-       << rec.indy1 << " " << rec.y1 << " "
-       << rec.indz1 << " " << rec.z1 << "\t "
-       << rec.indx2 << " " << rec.x2 << " "
-       << rec.indy2 << " " << rec.y2 << " "
-       << rec.indz2 << " " << rec.z2 << "\n"
+       << setw(3) << rec.indx1 << " "
+       << setw(3) << rec.indy1 << " "
+       << setw(3) << rec.indz1 << setw(3) << " "
+       << rec.x1    << " " << rec.y1    << " " << rec.z1    << " \t"
+       << setw(3) << rec.indx2 << " "
+       << setw(3) << rec.indy2 << " "
+       << setw(3) << rec.indz2 << "   "
+       << rec.x2    << " " << rec.y2    << " " << rec.z2 << "\n"
         ;
     return os;
 }
@@ -154,6 +164,12 @@ int main(int argc, char *argv[])
     std::cout << "\n\n";
 #endif
 
+    idw = 0;
+    for (auto& adjr : adjrec) {
+        int k = adjr.second.id.length();
+        idw  = std::max(k, idw);
+    }
+
     int cov_index {0};
     std::map<std::string, Rec> adjdiff;
     for (auto& adjr : adjrec)
@@ -183,13 +199,55 @@ int main(int argc, char *argv[])
             adjdiff[id] = rec;
         }
 
+    std::cout.setf(std::ios_base::fixed, std::ios_base::floatfield);
+    std::cout.precision(5);
+
+    int prec  {5};
+    int indxw {0}, indyw {0}, indzw {0};
     for (auto& rec : adjdiff)
     {
         auto& r = rec.second;
-        std::cout << r.id << "  "
-                  << r.indx << " " << r.indy << " " << r.indz << " "
-                  << r.dx << " " << r.dy << " " << r.dz << "\n";
+        {
+            std::ostringstream strx;
+            strx.precision(prec);
+            strx.setf(std::ios_base::fixed);
+            strx << r.dx;
+            indxw = std::max<int>(indxw, strx.str().length());
+        }{
+            std::ostringstream stry;
+            stry.precision(prec);
+            stry.setf(std::ios_base::fixed);
+            stry << r.dy;
+            indyw = std::max<int>(indyw, stry.str().length());
+        }{
+            std::ostringstream strz;
+            strz.precision(prec);
+            strz.setf(std::ios_base::fixed);
+            strz << r.dz;
+            indzw = std::max<int>(indzw, strz.str().length());
+        }
+    }
+
+    indw = 1 + std::log10<int>(cov_index);
+    std::cout.precision(prec);
+
+    for (auto& rec : adjdiff)
+    {
+        auto& r = rec.second;
+        std::cout << std::setw(idw)   << r.id   << "   "
+
+                  << std::setw(indw)  << r.indx << " "
+                  << std::setw(indw)  << r.indy << " "
+                  << std::setw(indw)  << r.indz << "   "
+
+                  << std::setw(indxw) << r.dx   << "  "
+                  << std::setw(indyw) << r.dy   << "  "
+                  << std::setw(indzw) << r.dz   << "    "
+
+                  << adjrec[r.id].x1 << "  "
+                  << adjrec[r.id].y1 << "  "
+                  << adjrec[r.id].z1
+
+                  << std::endl;
     }
 }
-
-
