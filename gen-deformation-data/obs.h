@@ -6,14 +6,33 @@
 #include <map>
 #include "xml.h"
 
-//extern std::map<std::string, Point> points;
+
+extern std::string obs_from; //the global from point id is passed to directions
 
 struct obs {
-  obs()  { std::cout << "<obs>\n"; }
-  ~obs() { std::cout << "</obs>\n"; }
+  obs(const char* from=nullptr)
+  {
+    if (from) {
+      obs_from = std::string(from);
+    }
+    else {
+      obs_from.clear();
+    }
+
+    std::cout
+      << "<obs"
+      << (from ? " from='" + obs_from +  "'" : "")
+      << ">\n";
+  }
+  ~obs() { std::cout << "</obs>\n\n"; }
 };
+
+void point(const char* a);
+void point(std::string a);
 
 void distance(const char* a, const char* b);
 void distance(std::string a, std::string b);
+
+void direction(std::string to);
 
 #endif

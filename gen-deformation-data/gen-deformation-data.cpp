@@ -1,6 +1,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <iomanip>
 
 using namespace std;
 
@@ -9,9 +10,7 @@ using namespace std;
 #include "obs.h"
 
 std::map<std::string, Point> points;
-
-
-
+std::string obs_from;
 
 int main()
 {
@@ -35,13 +34,78 @@ int main()
   points["k"] = Point( 1800.401, 1326.347 );
   points["l"] = Point( 1782.918,  766.876 );
 
-  //xml x;
+  {
+    for (auto p : points)  point(p.first);
+    std::cout << std::endl;
+  }
 
   {
     obs dists;
 
     distance("A", "d");
+    distance("A", "e");
+    distance("A", "f");
+
+    distance("B", "d");
+    distance("B", "e");
+    distance("B", "f");
+
+    distance("C", "j");
+    distance("C", "k");
+    distance("C", "l");
   }
 
+  {
+    obs dists;
 
- }
+    distance("h", "d");
+    distance("h", "e");
+    distance("h", "f");
+    distance("h", "g");
+    distance("h", "i");
+    distance("h", "j");
+    distance("h", "k");
+    distance("h", "l");
+
+    distance("g", "d");
+    distance("g", "j");
+    distance("g", "h");
+    distance("i", "f");
+    distance("i", "l");
+    distance("i", "h");
+  }
+
+  {
+    obs directions("h");
+
+    direction("g");
+    direction("d");
+    direction("e");
+    direction("f");
+    direction("i");
+    direction("l");
+    direction("k");
+    direction("j");
+  }
+
+  {
+    obs directions("g");
+
+    direction("d");
+    direction("e");
+    direction("h");
+    direction("k");
+    direction("j");
+  }
+
+  {
+    obs directions("i");
+
+    direction("f");
+    direction("e");
+    direction("h");
+    direction("k");
+    direction("l");
+  }
+
+}
