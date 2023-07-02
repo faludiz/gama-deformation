@@ -8,6 +8,7 @@ using namespace std;
 #include "xml.h"
 #include "point.h"
 #include "obs.h"
+#include "transformation.h"
 
 std::map<std::string, Point> points;
 std::string obs_from;
@@ -33,6 +34,15 @@ int main()
   points["j"] = Point( 1803.784, 1766.784 );
   points["k"] = Point( 1800.401, 1326.347 );
   points["l"] = Point( 1782.918,  766.876 );
+
+#ifdef EPOCH_1
+  points.erase("k");
+#endif
+
+#ifdef EPOCH_2
+  transformation();
+  points.erase("e");
+#endif
 
   {
     for (auto p : points)  point(p.first);
