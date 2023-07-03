@@ -67,7 +67,7 @@ void direction(std::string to)
   dx -= from.x;
   dy -= from.y;
 
-  double d = std::atan2(dy, dx)/std::atan2(0,-1)*200;
+  double d = std::atan2(dx, dy)/std::atan2(0,-1)*200;
 
   std::cout << "<direction to='" << to << "' val='"
             << std::fixed << std::setprecision(3) << d << "' />\n";

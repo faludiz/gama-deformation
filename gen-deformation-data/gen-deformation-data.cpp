@@ -18,9 +18,9 @@ int main()
   xml x;
 
   // fixed points
-  points["A"] = Point(  460.513,  360.007, true);
-  points["B"] = Point(  440.187, 1711.264, true);
-  points["C"] = Point( 2613.062, 1220.913, true);
+  points["A"] = Point(  480.513,  670.007, true);
+  points["B"] = Point(  390.187, 1601.264, true);
+  points["C"] = Point( 2313.062, 1220.913, true);
 
   // free points
   points["d"] = Point(  864.111, 1723.498 );
@@ -37,7 +37,7 @@ int main()
 
 #ifdef EPOCH_1
   points.erase("k");
-#endif
+#ifendif
 
 #ifdef EPOCH_2
   transformation();
@@ -50,19 +50,57 @@ int main()
   }
 
   {
-    obs dists;
+    obs directions("A");
+
+    direction("d");
+    direction("e");
+    direction("f");
+    direction("B");
 
     distance("A", "d");
     distance("A", "e");
     distance("A", "f");
+  }
+
+  {
+    obs directions("B");
+
+    direction("d");
+    direction("e");
+    direction("f");
+    direction("A");
 
     distance("B", "d");
     distance("B", "e");
     distance("B", "f");
+  }
+
+  {
+    obs directions("C");
+
+    direction("j");
+    direction("k");
+    direction("l");
 
     distance("C", "j");
     distance("C", "k");
     distance("C", "l");
+  }
+
+  {
+    obs directions("C");
+
+    direction("j");
+    direction("k");
+    direction("l");
+  }
+
+  {
+    obs directions("C");
+
+    direction("j");
+    direction("k");
+    direction("l");
   }
 
   {
@@ -118,4 +156,18 @@ int main()
     direction("l");
   }
 
+
+  {
+    obs distdir("k");
+
+    direction("h");
+    direction("j");
+    direction("C");
+    direction("l");
+
+    distance("k", "h");
+    distance("k", "j");
+    distance("k", "C");
+    distance("k", "l");
+  }
 }

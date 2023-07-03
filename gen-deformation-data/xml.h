@@ -10,7 +10,7 @@ R"HEADER(<?xml version="1.0" ?>
 <!-- 2023-06-30 -->
 
 <gama-local xmlns="http://www.gnu.org/software/gama/gama-local">
-<network axes-xy="ne">
+<network axes-xy="en">
 <description>
 gen-deformation-data
 </description>
