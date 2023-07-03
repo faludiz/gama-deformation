@@ -5,14 +5,30 @@
 
 struct xml {
   xml() {  std::cout <<
-R"HEADER(<?xml version="1.0" ?>
+R"HEADERbegin(<?xml version="1.0" ?>
 
 <!-- 2023-06-30 -->
 
 <gama-local xmlns="http://www.gnu.org/software/gama/gama-local">
 <network axes-xy="en">
 <description>
-gen-deformation-data
+)HEADERbegin"
+
+#ifndef EPOCH_1
+#ifndef EPOCH_2
+"gen-deformation-data epoch 0"
+#endif
+#endif
+
+#ifdef EPOCH_1
+"gen-deformation-data epoch 1"
+#endif
+
+#ifdef EPOCH_2
+"gen-deformation-data epoch 2"
+#endif
+
+R"HEADERend(
 </description>
 
 <parameters
@@ -28,7 +44,7 @@ gen-deformation-data
       angle-stdev="10.0"
       zenith-angle-stdev="10" >
 
-)HEADER";
+)HEADERend";
 }
 
   ~xml() {std::cout << "\n</points-observations>\n</network>\n</gama-local>\n\n"; }

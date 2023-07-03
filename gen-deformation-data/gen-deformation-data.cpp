@@ -37,7 +37,7 @@ int main()
 
 #ifdef EPOCH_1
   points.erase("k");
-#ifendif
+#endif
 
 #ifdef EPOCH_2
   transformation();
