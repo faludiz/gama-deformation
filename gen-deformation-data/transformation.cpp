@@ -31,7 +31,7 @@ void transformation()
   std::cout << "<!-- generated point shifts\n";
 
   double t11 {1-2e-5}, t12 {1e-5}, t21 {-2e-5},  t22 {1 + 1e-6};
-  for (auto p : points)
+  for (auto& p : points)
     {
       if (p.second.fixed) continue;
 
@@ -40,8 +40,11 @@ void transformation()
       double x = cx + t11*dx + t12*dy;
       double y = cy + t21*dx + t22*dy;
 
-      std::cout << "*** " << p.first
-                << "   "  << x-p.second.x << "  " << y-p.second.y << std::endl;
+      std::cout << "*** " << p.first << "   "
+                << x-p.second.x << "  " << y-p.second.y << std::endl;
+
+      p.second.x = x;
+      p.second.y = y;
     }
 
   std::cout << "-->\n\n";
