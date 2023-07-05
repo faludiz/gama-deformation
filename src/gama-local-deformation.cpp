@@ -201,9 +201,9 @@ int main(int argc, char *argv[])
             adjdiff[id] = rec;
         }
 
-    std::cout << "# point id / covariance indexes /"
-                 " x, y, z shifts (epoch2 - epoch1) /"
-                 " epoch1  x, y, z\n\n";
+    std::cout << "# point id | covariance indexes |"
+                 " x, y, z shifts (epoch2 - epoch1) |"
+                 " epoch2  x, y, z\n\n";
 
     int prec  {5};
     std::cout.setf(std::ios_base::fixed, std::ios_base::floatfield);
@@ -250,9 +250,9 @@ int main(int argc, char *argv[])
                   << std::setw(indyw) << r.dy   << "  "
                   << std::setw(indzw) << r.dz   << "    "
 
-                  << adjrec[r.id].x1 << "  "
-                  << adjrec[r.id].y1 << "  "
-                  << adjrec[r.id].z1
+                  << adjrec[r.id].x2 << "  "
+                  << adjrec[r.id].y2 << "  "
+                  << adjrec[r.id].z2
 
                   << std::endl;
     }
