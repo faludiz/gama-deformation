@@ -118,3 +118,6 @@ Sandbox
 *.diff
 work
 .qtc_clangd
+
+gen-deformation-data
+src/gama-local-deformation
