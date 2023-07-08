@@ -1,0 +1,89 @@
+Adjustment of local geodetic network        version: 2.24-envelope / GNU C/C++ 11.3
+************************************
+http://www.gnu.org/software/gama/
+
+Approximate coordinates of computed points replaced by adjusted
+***************************************************************
+
+Number of linearization iterations: 1
+
+
+Network description
+*******************
+
+demo01 - epoch A
+
+
+General parameters of the adjustment
+************************************
+
+Coordinates           xyz     xy       z
+
+Adjusted       :       0       1       0
+Constrained  * :       0       0       0
+Fixed          :       0       3       0
+-----------------------------------------
+Total          :       0       4       0
+
+Number of distances        :     3
+
+Number of project equations:     3            Number of unknowns:     2
+Degrees of freedom         :     1            Network defect    :     0
+
+m0  apriori    :    10.00
+m0' aposteriori:     0.56         [pvv] : 3.13338e-01
+
+During statistical analysis we work
+
+- with aposteriori standard deviation 0.56
+- with confidence level 95 %
+Ratio m0' aposteriori / m0 apriori: 0.056
+95 % interval (0.031, 2.241) contains value m0'/m0
+
+Maximal studentized residual 1.00 exceeds critical value 1.00
+on significance level 5 % for observation #3
+<distance from="Q" to="C" val="27.442" stdev="10.0" />
+
+
+Fixed points
+************
+
+       point         x              y   
+==========================================
+
+           A      151.00000       89.00000
+           B       32.00000      120.00000
+           C       80.00000       65.00000
+
+
+Adjusted coordinates
+********************
+
+  i        point    approximate  correction  adjusted    std.dev conf.i.
+====================== value ====== [m] ====== value ========== [mm] ===
+
+               Q
+  1            x        87.67000   0.01673      87.68673     0.4     5.2
+  2            y        91.34000   0.00328      91.34328     0.5     6.7
+
+
+Mean errors and parameters of error ellipses
+********************************************
+
+       point     mp      mxy      mean error ellipse  conf.err. ellipse   g
+=============== [mm] == [mm] ==== a [mm] b  alpha[g] ==== a' [mm] b' ========
+
+           Q     0.7     0.5     0.5     0.4    85.9    10.7     8.1     0.0
+
+
+Adjusted observations
+*********************
+
+   i   standpoint       target           observed     adjusted std.dev conf.i.
+=========================================== value ==== [m|g] ====== [mm|cc] ==
+
+   1            Q            A dist.     63.35700     63.35662     0.4     5.2
+   2                         B dist.     62.62800     62.62762     0.4     5.3
+   3                         C dist.     27.44200     27.44184     0.5     6.8
+
+
