@@ -1,6 +1,6 @@
 /*
   GNU Gama C++ library
-  Copyright (C) 2019  Ales Cepek <cepek@fsv.cvut.cz>
+  Copyright (C) 2019, 2023 Cepek <cepek@gnu.org
 
   This file is part of the GNU Gama C++ library.
 
@@ -28,3 +28,17 @@ const char* LocalCoordinateSystem::locos_tags[8]
     "en", "nw", "se", "ws", "ne", "sw", "es", "wn"
   };
 
+LocalCoordinateSystem::CS
+LocalCoordinateSystem::string2locos(std::string s)
+{
+    if      (s == locos_tags[0]) return LocalCoordinateSystem::CS::EN;
+    else if (s == locos_tags[1]) return LocalCoordinateSystem::CS::NW;
+    else if (s == locos_tags[2]) return LocalCoordinateSystem::CS::SE;
+    else if (s == locos_tags[3]) return LocalCoordinateSystem::CS::WS;
+    else if (s == locos_tags[4]) return LocalCoordinateSystem::CS::NE;
+    else if (s == locos_tags[5]) return LocalCoordinateSystem::CS::SW;
+    else if (s == locos_tags[6]) return LocalCoordinateSystem::CS::ES;
+    else if (s == locos_tags[7]) return LocalCoordinateSystem::CS::WN;
+
+    else return LocalCoordinateSystem::CS::EN;
+}

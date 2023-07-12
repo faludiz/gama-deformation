@@ -1,6 +1,6 @@
 /*
   GNU Gama C++ library
-  Copyright (C) 2001, 2019  Ales Cepek <cepek@fsv.cvut.cz>
+  Copyright (C) 2001, 2019, 2023  Ales Cepek <cepek@gnu.org>
 
   This file is part of the GNU Gama C++ library.
 
@@ -21,6 +21,7 @@
 #ifndef gama_local_Local_Coordinate_System_h_
 #define gama_local_Local_Coordinate_System_h_
 
+#include <string>
 
 namespace GNU_gama { namespace local {
 
@@ -53,6 +54,8 @@ namespace GNU_gama { namespace local {
       {
         return locos_tags[unsigned(local_coordinate_system)];
       }
+
+    static LocalCoordinateSystem::CS string2locos(std::string);
 
     static const char* locos_tags[8];
     //  {
