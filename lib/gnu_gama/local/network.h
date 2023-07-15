@@ -1,5 +1,5 @@
 /* GNU Gama -- adjustment of geodetic networks
-   Copyright (C) 1999, 2006, 2012, 2014, 2015, 2017, 2020
+   Copyright (C) 1999, 2006, 2012, 2014, 2015, 2017, 2020, 2023
                  Ales Cepek <cepek@gnu.org>
 
    This file is part of the GNU Gama C++ library.
@@ -51,6 +51,12 @@ namespace GNU_gama { namespace local
 
     AdjBase                *least_squares {nullptr};
     GNU_gama::AdjInputData  input;
+
+    struct ellipse_par
+    {
+        double a, b, alfa;
+    };
+    std::map<PointID, ellipse_par> stashed_ellipses;
 
   public:
 
@@ -239,6 +245,8 @@ namespace GNU_gama { namespace local
     }
     void std_error_ellipse(const PointID&, double& a,
                            double& b, double& alfa);
+    void stash_std_error_ellipse(
+        const PointID&, double a, double b, double alfa);
 
 
     // ...  parameters of statistic analysis  ...............................

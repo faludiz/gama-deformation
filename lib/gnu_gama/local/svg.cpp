@@ -1,7 +1,7 @@
 /* GNU Gama -- adjustment of geodetic networks
    Copyright (C) 2012  Ales Cepek <cepek@gnu.org>
                  2014  Maxime Le Moual <maxime.le-moual@ensg.eu>
-                 2018, 2019  Ales Cepek <cepek@gnu.org>
+                 2018, 2019, 2023  Ales Cepek <cepek@gnu.org>
 
    This file is part of the GNU Gama C++ library.
 
@@ -426,15 +426,16 @@ void GamaLocalSVG::svg_observations() const
                   PointID to   = b->to();
                   if (from < to) pairs.insert(PairID(from, to));
                   else           pairs.insert(PairID(to, from));
+
+                  if (const Angle* b = dynamic_cast<const Angle*>(*i))
+                    {
+                      PointID from = b->from();
+                      PointID to   = b->fs();
+                      if (from < to) pairs.insert(PairID(from, to));
+                      else           pairs.insert(PairID(to, from));
+                    }
                 }
 
-              if (const Angle* b = dynamic_cast<const Angle*>(*i))
-                {
-                  PointID from = b->from();
-                  PointID to   = b->fs();
-                  if (from < to) pairs.insert(PairID(from, to));
-                  else           pairs.insert(PairID(to, from));
-                }
             }
         }
     }

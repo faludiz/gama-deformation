@@ -1,7 +1,7 @@
 /* GNU Gama -- adjustment of geodetic networks
     Copyright (C) 1999, 2006, 2010  Ales Cepek <cepek@fsv.cvut.cz>
                   2011  Vaclav Petras <wenzeslaus@gmail.com>
-                  2012, 2013, 2014, 2015, 2018, 2019, 2020, 2021
+                  2012, 2013, 2014, 2015, 2018, 2019, 2020, 2021, 2023
                   Ales Cepek <cepek@gnu.org>
 
    This file is part of the GNU Gama C++ library.
@@ -1034,6 +1034,16 @@ void LocalNetwork::std_error_ellipse(const PointID& cb,
 {
   using namespace std;
 
+  // stashed ellipses are needed only in SVG drawing from adjustment XML
+  auto p = stashed_ellipses.find(cb);
+  if (p != stashed_ellipses.end())
+  {
+      a = p->second.a;
+      b = p->second.b;
+      alfa = p->second.alfa;
+      return;
+  }
+
   const LocalPoint& bod = PD[cb];
   int iy = bod.index_y();
   int ix = bod.index_x();
@@ -1057,6 +1067,14 @@ void LocalNetwork::std_error_ellipse(const PointID& cb,
 
 // 1.7.09 added optional update of constrained coordinates; inspired
 // by adjustment of photographic observation by Jim Sutherland
+
+void LocalNetwork::stash_std_error_ellipse(const PointID& cb,
+                                           double a, double b, double alfa)
+{
+  ellipse_par ep;
+  ep.a = a; ep.b = b; ep.alfa = alfa;
+  stashed_ellipses[cb] = ep;
+}
 
 void LocalNetwork::refine_approx_coordinates()
 {

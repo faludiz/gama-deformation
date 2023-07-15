@@ -343,3 +343,9 @@ if (NOT DEFINED DISABLE_GNU_GAMA_TESTING)
   enable_testing()
   add_subdirectory(tests)
 endif()
+
+# XML2defo demo
+#
+add_executable(xml2defo src/xml2defo.cpp)
+target_link_libraries(xml2defo PUBLIC libgama)
+
