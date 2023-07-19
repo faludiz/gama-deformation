@@ -133,6 +133,20 @@ namespace GNU_gama
     typedef std::vector<Point> PointList;
     PointList  fixed_points, approximate_points, adjusted_points;
 
+    struct Ellipse
+    {
+      std::string id;
+      double major, minor, alpha;
+
+      void clear()
+      {
+        major = minor = alpha = 0;
+      }
+    };
+
+    typedef std::vector<Ellipse> EllipseList;
+    EllipseList ellipses;  // for backward compatibility ellipses are optional
+
     struct Orientation
     {
       std::string id;

@@ -186,6 +186,18 @@ namespace GNU_gama
           s_y_end,
           s_z,
           s_z_end,
+          s_std_error_ellipses,
+          s_std_error_ellipses_end,
+          s_ellipse,
+          s_ellipse_end,
+          s_ellipse_id,
+          s_ellipse_id_end,
+          s_ellipse_major,
+          s_ellipse_major_end,
+          s_ellipse_minor,
+          s_ellipse_minor_end,
+          s_ellipse_alpha,
+          s_ellipse_alpha_end,
           s_orientation_shifts,
           s_orientation_shifts_end,
           s_orientation,
@@ -242,6 +254,7 @@ namespace GNU_gama
         {
           t_adj,
           t_adjusted,
+          t_alpha,
           t_angle,
           t_angles,
           t_approx,
@@ -276,6 +289,11 @@ namespace GNU_gama
           t_dy,
           t_dz,
           t_equations,
+          t_ellipse,
+          t_ellipse_id,
+          t_ellipse_major,
+          t_ellipse_minor,
+          t_ellipse_alpha,
           t_error_xml,
           t_err_adj,
           t_err_obs,
@@ -293,6 +311,8 @@ namespace GNU_gama
           t_line_number,
           t_linearization_iterations,
           t_lower,
+          t_major,
+          t_minor,
           t_network_general_parameters,
           t_network_processing_summary,
           t_not_applicable,
@@ -314,6 +334,7 @@ namespace GNU_gama
           t_slope_distance,
           t_standard_deviation,
           t_stdev,
+          t_std_error_ellipses,
           t_std_residual,
           t_sum_of_squares,
           t_to,
@@ -348,6 +369,7 @@ namespace GNU_gama
       bool               point_con_x, point_con_y, point_con_z;
       bool               tmp_point_adjusted;
       Orientation        tmp_orientation;
+      Ellipse            tmp_ellipse;
       int                tmp_dim;
       int                tmp_band;
       CovMat<>::iterator tmp_i;
@@ -417,8 +439,16 @@ namespace GNU_gama
       void x(bool);
       void y(bool);
       void z(bool);
+      //
+      void std_error_ellipses(bool);
+      void ellipse(bool);
+      void ellipse_id(bool);
+      void ellipse_major(bool);
+      void ellipse_minor(bool);
+      void ellipse_alpha(bool);
       void orientation_shifts(bool);
       void orientation(bool);
+      //
       void ors_approx(bool);
       void ors_adj(bool);
       void cov_mat(bool);

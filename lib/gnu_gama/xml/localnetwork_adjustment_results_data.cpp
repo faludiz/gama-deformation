@@ -97,4 +97,6 @@ void LocalNetworkAdjustmentResultsData::init()
   fixed_points      .clear();
   approximate_points.clear();
   adjusted_points   .clear();
+
+  ellipses.clear();
 }

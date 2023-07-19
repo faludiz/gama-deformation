@@ -89,6 +89,8 @@ void LocalNetworkAdjustmentResults::init()
   fixed_points      .clear();
   approximate_points.clear();
   adjusted_points   .clear();
+
+  ellipses.clear();
 }
 
 double LocalNetworkAdjustmentResults::Observation::residual() const
@@ -115,6 +117,7 @@ void LocalNetworkAdjustmentResults::read_xml(std::istream& xml)
 
   while (getline(xml, text))
     {
+      std::cerr << text << std::endl;
       p->xml_parse(text.c_str(), static_cast<int>(text.length()), 0);
       p->xml_parse("\n", 1, 0);
     }
@@ -238,10 +241,21 @@ void LocalNetworkAdjustmentResults::Parser::init()
   tagfun[s_id_end                             ][t_z                              ] = &Parser::z;
   tagfun[s_x_end                              ][t_y                              ] = &Parser::y;
   tagfun[s_y_end                              ][t_z                              ] = &Parser::z;
-  tagfun[s_adjusted_end                       ][t_orientation_shifts             ] = &Parser::orientation_shifts;
-  tagfun[s_orientation_shifts                 ][t_orientation                    ] = &Parser::orientation;
-  tagfun[s_orientation_end                    ][t_orientation                    ] = &Parser::orientation;
-  tagfun[s_orientation                        ][t_id                             ] = &Parser::id;
+  //
+  tagfun[s_adjusted_end                       ][t_orientation_shifts             ] = &Parser::orientation_shifts;  // std ellipses are optional
+  tagfun[s_orientation_shifts                 ][t_orientation                    ] = &Parser::orientation;         //     orientation shifts may follow
+  tagfun[s_orientation_end                    ][t_orientation                    ] = &Parser::orientation;         //     adjusted points section
+  tagfun[s_orientation                        ][t_id                             ] = &Parser::id;                  //     or std error ellipses section
+
+  tagfun[s_adjusted_end                       ][t_std_error_ellipses             ] = &Parser::std_error_ellipses;
+  tagfun[s_std_error_ellipses                 ][t_ellipse                        ] = &Parser::ellipse;
+  tagfun[s_std_error_ellipses_end             ][t_orientation_shifts             ] = &Parser::orientation_shifts;  // std ellipses are optional
+  tagfun[s_ellipse                            ][t_id                             ] = &Parser::ellipse_id;
+  tagfun[s_ellipse_id_end                     ][t_major                          ] = &Parser::ellipse_major;
+  tagfun[s_ellipse_major_end                  ][t_minor                          ] = &Parser::ellipse_minor;
+  tagfun[s_ellipse_minor_end                  ][t_alpha                          ] = &Parser::ellipse_alpha;
+  tagfun[s_ellipse_end                        ][t_ellipse                        ] = &Parser::ellipse;
+  //
   tagfun[s_id_end                             ][t_approx                         ] = &Parser::ors_approx;
   tagfun[s_ors_approx_end                     ][t_adj                            ] = &Parser::ors_adj;
   tagfun[s_orientation_shifts_end             ][t_cov_mat                        ] = &Parser::cov_mat;
@@ -331,6 +345,7 @@ int LocalNetworkAdjustmentResults::Parser::tag(const char* c)
     case 'a':
       if (!strcmp(c, "adj"                       )) return t_adj;
       if (!strcmp(c, "adjusted"                  )) return t_adjusted;
+      if (!strcmp(c, "alpha"                     )) return t_alpha;
       if (!strcmp(c, "angle"                     )) return t_angle;
       if (!strcmp(c, "angles"                    )) return t_angles;
       if (!strcmp(c, "apriori"                   )) return t_apriori;
@@ -374,6 +389,7 @@ int LocalNetworkAdjustmentResults::Parser::tag(const char* c)
       if (!strcmp(c, "dz"                        )) return t_dz;
       break;
     case 'e':
+      if (!strcmp(c, "ellipse"                   )) return t_ellipse;
       if (!strcmp(c, "equations"                 )) return t_equations;
       if (!strcmp(c, "err-adj"                   )) return t_err_adj;
       if (!strcmp(c, "err-obs"                   )) return t_err_obs;
@@ -403,6 +419,10 @@ int LocalNetworkAdjustmentResults::Parser::tag(const char* c)
       if (!strcmp(c, "lineNumber"                )) return t_line_number;
       if (!strcmp(c, "linearization-iterations"  )) return t_linearization_iterations;
       break;
+    case 'm':
+      if (!strcmp(c, "major"                     )) return t_major;
+      if (!strcmp(c, "minor"                     )) return t_minor;
+      break;
     case 'n':
       if (!strcmp(c, "network-general-parameters")) return t_network_general_parameters;
       if (!strcmp(c, "network-processing-summary")) return t_network_processing_summary;
@@ -431,9 +451,10 @@ int LocalNetworkAdjustmentResults::Parser::tag(const char* c)
       break;
     case 's':
       if (!strcmp(c, "s-dists"                   )) return t_s_dists;
-      if (!strcmp(c, "slope-distance"                   )) return t_slope_distance;
+      if (!strcmp(c, "slope-distance"            )) return t_slope_distance;
       if (!strcmp(c, "standard-deviation"        )) return t_standard_deviation;
       if (!strcmp(c, "stdev"                     )) return t_stdev;
+      if (!strcmp(c, "std-error-ellipses"        )) return t_std_error_ellipses;
       if (!strcmp(c, "std-residual"              )) return t_std_residual;
       if (!strcmp(c, "sum-of-squares"            )) return t_sum_of_squares;
       break;
@@ -1464,6 +1485,97 @@ void LocalNetworkAdjustmentResults::Parser::z(bool start)
       tmp_point.z = get_float();
       point_has_z = true;
       set_state(s_z_end);
+    }
+}
+
+
+void LocalNetworkAdjustmentResults::Parser::std_error_ellipses(bool start)
+{
+    if (start)
+    {
+      stack.push(&Parser::std_error_ellipses);
+      set_state(s_std_error_ellipses);
+    }
+    else
+    {
+      set_state(s_std_error_ellipses_end);
+    }
+}
+
+
+void LocalNetworkAdjustmentResults::Parser::ellipse(bool start)
+{
+    if (start)
+    {
+      tmp_ellipse.clear();
+      stack.push(&Parser::ellipse);
+      set_state(s_ellipse);
+    }
+    else
+    {
+      adj->ellipses.push_back(tmp_ellipse);
+      set_state(s_ellipse_end);
+    }
+}
+
+
+void LocalNetworkAdjustmentResults::Parser::ellipse_id(bool start)
+{
+    if (start)
+    {
+      stack.push(&Parser::ellipse_id);
+      set_state(s_ellipse_id);
+    }
+    else
+    {
+      tmp_ellipse.id = get_string();
+      set_state(s_ellipse_id_end);
+    }
+}
+
+
+void LocalNetworkAdjustmentResults::Parser::ellipse_major(bool start)
+{
+    if (start)
+    {
+      stack.push(&Parser::ellipse_major);
+      set_state(s_ellipse_major);
+    }
+    else
+    {
+      tmp_ellipse.major = get_float();
+      set_state(s_ellipse_major_end);
+    }
+}
+
+
+void LocalNetworkAdjustmentResults::Parser::ellipse_minor(bool start)
+{
+    if (start)
+    {
+      stack.push(&Parser::ellipse_minor);
+      set_state(s_ellipse_minor);
+    }
+    else
+    {
+      tmp_ellipse.minor = get_float();
+      set_state(s_ellipse_minor_end);
+    }
+}
+
+//tmp_id;
+void LocalNetworkAdjustmentResults::Parser::ellipse_alpha(bool start)
+{
+    if (start)
+    {
+      stack.push(&Parser::ellipse_alpha);
+      set_state(s_ellipse_alpha);
+    }
+    else
+    {
+      tmp_ellipse.alpha = get_float();
+      adj->ellipses.push_back(tmp_ellipse);
+      set_state(s_ellipse_alpha_end);
     }
 }
 

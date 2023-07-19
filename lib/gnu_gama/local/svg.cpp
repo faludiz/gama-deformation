@@ -489,7 +489,7 @@ void GamaLocalSVG::svg_draw_point(const PointID& pid,
                << ">" << pid.str() << "</text>\n";
         }
 
-      if (tst_draw_ellipses && IS.is_adjusted() && !point.fixed_xy())
+      if (tst_draw_ellipses && /*IS.is_adjusted() &&*/ !point.fixed_xy())
         {
           double a, b, alpha;
           svg_ellipse(pid, a, b, alpha);

@@ -1,10 +1,12 @@
-<?xml version="1.0"?>
-
-<xs:schema version="1.02"
+<xs:schema version="1.03"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns="http://www.gnu.org/software/gama/gama-local-adjustment"
   targetNamespace="http://www.gnu.org/software/gama/gama-local-adjustment"
   elementFormDefault="qualified">
+
+<!--
+1.03 support for optional standard error ellipses
+-->
 
   <xs:annotation>
     <xs:documentation xml:lang="en">
@@ -174,6 +176,7 @@
         <xs:element ref="fixed"/>
         <xs:element ref="approximate"/>
         <xs:element ref="adjusted"/>
+        <xs:element ref="std-error-ellipses" minOccurs="0"/>
         <xs:element ref="orientation-shifts"/>
         <xs:element ref="cov-mat"/>
         <xs:element ref="original-index"/>
@@ -251,6 +254,14 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="std-error-ellipses">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="ellipse"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="connected-network">
     <xs:complexType/>
   </xs:element>
@@ -319,6 +330,17 @@
           <xs:element ref="Z"/>
           <xs:element ref="z"/>
         </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ellipse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="id"/>
+        <xs:element ref="major"/>
+        <xs:element ref="minor"/>
+        <xs:element ref="alpha"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -548,4 +570,7 @@
   <xs:element name="xyz" type="xs:string"/>
   <xs:element name="xyz-coords" type="xs:nonNegativeInteger"/>
   <xs:element name="z-angles" type="xs:nonNegativeInteger"/>
+  <xs:element name="major" type="xs:double"/>
+  <xs:element name="minor" type="xs:double"/>
+  <xs:element name="alpha" type="xs:double"/>
 </xs:schema>
