@@ -1,5 +1,5 @@
 /* GNU Gama -- adjustment of geodetic networks
-   Copyright (C) 2013, 2014, 2022  Ales Cepek <cepek@gnu.org>
+   Copyright (C) 2013, 2014, 2022, 2023  Ales Cepek <cepek@gnu.org>
 
    This file is part of the GNU Gama C++ library.
 
@@ -145,7 +145,7 @@ namespace GNU_gama
     };
 
     typedef std::vector<Ellipse> EllipseList;
-    EllipseList ellipses;  // for backward compatibility ellipses are optional
+    EllipseList ellipses;  // ellipses are optional for backward compatibility
 
     struct Orientation
     {

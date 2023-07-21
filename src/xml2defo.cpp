@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <memory>
+#include <string>
 
 #include <gnu_gama/local/language.h>
 #include <gnu_gama/local/svg.h>
@@ -24,7 +25,7 @@ int main(int argc, char* argv[])
 
     GNU_gama::local::set_gama_language(GNU_gama::local::en);
 
-    auto epoch = std::make_unique<Results>();
+    auto adjxml = std::make_unique<Results>();
     {
         std::ifstream inp_epoch1(argv[1]);
         if (!inp_epoch1) {
@@ -32,26 +33,26 @@ int main(int argc, char* argv[])
                       << argv[1] << "\n";
             return 1;
         }
-        epoch->read_xml(inp_epoch1);
+        adjxml->read_xml(inp_epoch1);
     }
 
 
     auto IS = new GNU_gama::local::LocalNetwork;
     {
-        std::string epoch_is = epoch->network_general_parameters.epoch;
+        std::string epoch_is = adjxml->network_general_parameters.epoch;
         if (!epoch_is.empty()) IS->set_epoch(std::stod(epoch_is.c_str()));
 
-        std::string algorithm = epoch->network_general_parameters.gama_local_algorithm;
+        std::string algorithm = adjxml->network_general_parameters.gama_local_algorithm;
         IS->set_algorithm(algorithm);
 
-        std::string axes = epoch->network_general_parameters.axes_xy;
+        std::string axes = adjxml->network_general_parameters.axes_xy;
         IS->PD.local_coordinate_system
             = GNU_gama::local::LocalCoordinateSystem::string2locos(axes);
 
     }
 
 
-    for (const auto& ptfix : epoch->fixed_points)
+    for (const auto& ptfix : adjxml->fixed_points)
     {
         if (!ptfix.hxy) continue;
 
@@ -63,7 +64,7 @@ int main(int argc, char* argv[])
         point.index_x() = point.index_y() = point.index_z() = 0;
     }
 
-    for (const auto& ptadj : epoch->adjusted_points)
+    for (const auto& ptadj : adjxml->adjusted_points)
     {
         if (!ptadj.hxy || ptadj.indx==0 || ptadj.indy==0) continue;
 
@@ -79,7 +80,7 @@ int main(int argc, char* argv[])
     }
 
     GNU_gama::local::StandPoint* standpoint = new GNU_gama::local::StandPoint(&IS->OD);
-    for (const auto& obs : epoch->obslist)
+    for (const auto& obs : adjxml->obslist)
     {
         using GNU_gama::local::Distance;
 
@@ -101,11 +102,12 @@ int main(int argc, char* argv[])
     standpoint->covariance_matrix.reset(k,0);
     for (int i=1; i<=k; i++) standpoint->covariance_matrix(i,i) = 1;
 
+
     IS->OD.clusters.push_back(standpoint);
-    for (const auto& P : IS->PD)
+
+    for (auto& e : adjxml->ellipses)
     {
-        // if (P.second.free_xy()) std::cout << P.first << std::endl;
-        if (P.second.free_xy()) IS->stash_std_error_ellipse(P.first, 1,1,1);
+        IS->stash_std_error_ellipse(e.id, e.major, e.minor, e.alpha);
     }
 
     GNU_gama::local::set_gama_language(GNU_gama::local::en);

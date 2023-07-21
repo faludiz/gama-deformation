@@ -2,7 +2,7 @@
   GNU Gama C++ library
   Copyright (C) 2006, 2010  Ales Cepek <cepek@gnu.org>
     2011  Vaclav Petras <wenzeslaus@gmail.com>
-    2012, 2013, 2014, 2018, 2019, 2022  Ales Cepek <cepek@gnu.org>
+    2012, 2013, 2014, 2018, 2019, 2022, 2023  Ales Cepek <cepek@gnu.org>
 
   This file is part of the GNU Gama C++ library
 
@@ -728,6 +728,7 @@ void LocalNetworkXML::coordinates(std::ostream& out) const
     }
   out << "</adjusted>\n";
 
+  std_error_ellipses(out);
   orientation_shifts(out, ind, dim);
 
   int band = 0;
@@ -786,6 +787,37 @@ void LocalNetworkXML::coordinates(std::ostream& out) const
   out << "</original-index>\n";
 
   out << "\n</coordinates>\n";
+}
+
+
+void  LocalNetworkXML::std_error_ellipses(std::ostream& out) const
+{
+  std::ios_base::fmtflags f( out.flags() );
+  out.setf(ios_base::scientific, ios_base::floatfield);
+
+  out << "\n<std-error-ellipses>\n";
+
+  for (PointData::const_iterator
+           i=netinfo->PD.begin(); i!=netinfo->PD.end(); ++i)
+  {
+      const PointID& ID   = (*i).first;
+      const LocalPoint& p = (*i).second;
+      if (!p.active_xy() || !p.free_xy()) continue;
+
+      double major, minor, alpha;
+      netinfo->std_error_ellipse(ID, major, minor, alpha);
+
+      out << "<ellipse>";
+      out << " <id>" << ID << "</id>";
+      out << " <major>" << major << "</major>";
+      out << " <minor>" << minor << "</minor>";
+      out << " <alpha>" << alpha << "</alpha>";
+      out << " </ellipse>\n";
+  }
+
+  out << "</std-error-ellipses>\n";
+
+  out.flags( f );
 }
 
 

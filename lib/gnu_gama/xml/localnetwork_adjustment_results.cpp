@@ -117,7 +117,6 @@ void LocalNetworkAdjustmentResults::read_xml(std::istream& xml)
 
   while (getline(xml, text))
     {
-      std::cerr << text << std::endl;
       p->xml_parse(text.c_str(), static_cast<int>(text.length()), 0);
       p->xml_parse("\n", 1, 0);
     }

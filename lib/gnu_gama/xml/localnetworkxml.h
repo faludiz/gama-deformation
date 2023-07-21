@@ -1,6 +1,6 @@
 /*
     GNU Gama -- adjustment of geodetic networks
-    Copyright (C) 2006  Ales Cepek <cepek@gnu.org>
+    Copyright (C) 2006, 2023  Ales Cepek <cepek@gnu.org>
 
     This file is part of the GNU Gama C++ library.
 
@@ -47,6 +47,7 @@ namespace GNU_gama
     void coordinates         (std::ostream&) const;
     void observations        (std::ostream&) const;
 
+    void std_error_ellipses(std::ostream&)  const;
     void orientation_shifts(std::ostream&, std::vector<int>&, int&) const;
     void std_dev_summary(std::ostream&) const;
     template <typename T> void tagnl(std::ostream&, const char*, T) const;
