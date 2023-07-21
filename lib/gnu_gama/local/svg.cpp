@@ -101,7 +101,8 @@ void GamaLocalSVG::svg_init() const
       // skip points that are not part of the adjustment or do not have xy
       if (!point.active_xy() || !point.test_xy()) continue;
 
-      if (tst_draw_ellipses && IS.is_adjusted() && !point.fixed_xy())
+      if (tst_draw_ellipses &&
+          (IS.is_adjusted() || IS.has_stashed_ellipses()) && !point.fixed_xy())
       {
           double a, b, alpha;
           IS.std_error_ellipse(pid, a, b, alpha);
@@ -145,7 +146,8 @@ void GamaLocalSVG::svg_init() const
       svg_xy(point, x, y);
 
       double dx = 0, dy = 0;
-      if (tst_draw_ellipses && IS.is_adjusted() && !point.fixed_xy())
+      if (tst_draw_ellipses &&
+          (IS.is_adjusted() || IS.has_stashed_ellipses()) && !point.fixed_xy())
       {
           double a, b, alpha;
           svg_ellipse(pid, a, b, alpha);
@@ -489,7 +491,8 @@ void GamaLocalSVG::svg_draw_point(const PointID& pid,
                << ">" << pid.str() << "</text>\n";
         }
 
-      if (tst_draw_ellipses && /*IS.is_adjusted() &&*/ !point.fixed_xy())
+      if (tst_draw_ellipses &&
+          (IS.is_adjusted() || IS.has_stashed_ellipses()) && !point.fixed_xy())
         {
           double a, b, alpha;
           svg_ellipse(pid, a, b, alpha);

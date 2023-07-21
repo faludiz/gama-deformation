@@ -1573,7 +1573,6 @@ void LocalNetworkAdjustmentResults::Parser::ellipse_alpha(bool start)
     else
     {
       tmp_ellipse.alpha = get_float();
-      adj->ellipses.push_back(tmp_ellipse);
       set_state(s_ellipse_alpha_end);
     }
 }

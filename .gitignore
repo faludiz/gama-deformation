@@ -20,6 +20,10 @@ Makefile.am.user
 out
 *.patch
 #
+# *.svg
+# *.xml
+# *.gkf
+#
 aclocal.m4
 autom4te.cache/
 #
@@ -100,7 +104,11 @@ lib/gnu_gama/local/language.html
 .Rhistory
 octave-workspace
 #
+CMakeFiles
+CMakeCache.txt
 CMakeLists.txt.user*
+*.cmake
+#
 .vs
 .vscode
 run.bat

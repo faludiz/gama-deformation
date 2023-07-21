@@ -169,6 +169,10 @@ namespace GNU_gama { namespace local
     {
       return tst_vyrovnani_;
     }
+    bool has_stashed_ellipses() const
+    {
+      return !stashed_ellipses.empty();
+    }
     const Vec& solve()
     {
       vyrovnani_();
