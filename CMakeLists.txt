@@ -318,6 +318,8 @@ target_link_libraries(gama-local-gkf2yaml PUBLIC libgama)
 add_executable(krumm2gama-local src/krumm2gama-local.cpp)
 target_link_libraries(krumm2gama-local PUBLIC libgama)
 
+add_executable(gama-local-deformation src/gama-local-deformation.cpp)
+target_link_libraries(gama-local-deformation PUBLIC libgama)
 
 if (EXISTS ${CMAKE_SOURCE_DIR}/lib/yaml-cpp)
    include_directories(lib/yaml-cpp/include)

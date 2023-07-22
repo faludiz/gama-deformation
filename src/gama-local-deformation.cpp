@@ -1,3 +1,29 @@
+/*
+    GNU Gama -- adjustment of geodetic networks
+    Copyright (C) 2013  Ales Cepek <cepek@gnu.org>
+
+    This file is part of the GNU Gama C++ library.
+
+    This library is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 3 of the License, or
+    (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  $
+*/
+
+const char* gama_local_deformation_version = "0.10";
+
+#include <iostream>
+bool gama_local_deformation_help(std::ostream& out,int argc, char *argv[]);
+
 #include <algorithm>
 #include <cmath>
 #include <iostream>
@@ -7,14 +33,15 @@
 #include <memory>
 #include <map>
 
-#include <iomanip>
-
 #include <gnu_gama/xml/localnetwork_adjustment_results.h>
 using Results = GNU_gama::LocalNetworkAdjustmentResults;
 
 #include <matvec/bandmat.h>
 
 // #define DEBUG
+
+std::string argv_epoch1, argv_epoch2, argv_text_file, argv_svg_file;
+int         argv_epoch_count {0};
 
 int idw {1}, indw {1};
 
@@ -71,6 +98,21 @@ std::ostream& operator<<(std::ostream& os, const Rec2& rec)
 
 int main(int argc, char *argv[])
 {
+    if (gama_local_deformation_help(std::cerr, argc, argv)) return 1;
+    /*{
+        std::cerr << "\n"
+                  << "epoch1 " << argv_epoch1      << "   "
+                  << "epoch2 " << argv_epoch2      << "   "
+                  << "text "   << argv_text_file   << "   "
+                  << "svg "    << argv_svg_file    << "   "
+                  << "count "  << argv_epoch_count << "\n";
+
+        return 0;
+    }*/
+
+    //std::cout << "******  " <<  argv_svg_file << " " << argv_text_file << "\n\n";
+    //return 1;
+
     std::map<std::string, Rec2> adjrec;
 
     auto epoch1 = std::make_unique<Results>();
@@ -271,4 +313,89 @@ int main(int argc, char *argv[])
         }
 
     std::cout << C;
+}
+
+
+bool gama_local_deformation_help(std::ostream& out, int argc, char *argv[])
+{
+    auto help = R""""(
+https://www.gnu.org/software/gama/
+
+Usage: gama-local-deformation epoch1.xml epoch2.xml [--text file] [--svg file]
+       gama-local-deformation --version
+       gama-local-deformation --help
+
+Options:
+
+epoch1 and epoch2 are adjustment results in XML format of the surveying network.
+           The program computes the shift vectors of common adjusted points
+           and their corresponding covariance matrix.
+
+--text     deformation analises in textual format. If missing, standard
+           output device is used (i.e. screen).
+--svg      if defined, the program writes SVG image of the second epoch
+           adjustment with standard deviation ellipses and points' shits.
+           The network schema is available only in 2D (xy coordinates only).
+--version
+--help
+
+
+Report bugs to: <bug-gama@gnu.org>
+GNU gama home page: <https://www.gnu.org/software/gama/>
+General help using GNU software: <https://www.gnu.org/gethelp/>
+)"""";
+
+    //if (argc < 3 || argc > 7) return true;
+
+    for (int i=1; i<argc; i++)
+    {
+        if (argv[i][0] == '-')
+        {
+            std::string argvi = argv[i];
+            if (argvi == "-h" || argvi == "-help" || argvi == "--help")
+            {
+                out << help;
+                return true;
+            }
+
+            if (argvi == "-v" || argvi == "-version" || argvi == "--version")
+            {
+                out << gama_local_deformation_version << "\n";
+                return false;
+            }
+
+            if (argvi == "--svg" || argvi == "-svg")
+            {
+                if (i+1 <= argc)
+                {
+                    argv_svg_file = argv[++i];
+                }
+                else
+                {
+                    return true;
+                }
+            }
+
+            if (argvi == "--text" || argvi == "-text")
+            {
+                if (i+1 <= argc)
+                {
+                    argv_text_file = argv[++i];
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+        else {
+            if      (argv_epoch_count == 0) argv_epoch1 = argv[i];
+            else if (argv_epoch_count == 1) argv_epoch2 = argv[i];
+            else return true;
+
+            argv_epoch_count++;
+        }
+    }
+
+    return false;
 }
