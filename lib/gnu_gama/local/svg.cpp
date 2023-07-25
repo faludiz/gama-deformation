@@ -259,7 +259,14 @@ void GamaLocalSVG::draw(std::ostream& output_stream) const
     " width='"  << wmaxx << "'"
     " height='" << wmaxy << "'"
     " xmlns='http://www.w3.org/2000/svg'"
-    " xmlns:xlink='http://www.w3.org/1999/xlink' >\n";
+    " xmlns:xlink='http://www.w3.org/1999/xlink' >\n"
+    "\n"
+    "<defs>\n"
+    "  <marker id='arrowhead' markerWidth='10' markerHeight='7'\n"
+    "  refX='0' refY='3.5' orient='auto' >\n"
+    " <polygon points='0 0, 10 3.5, 0 7' />\n"
+    " </marker>\n"
+    "</defs>\n";
 
 #if 0
   *svg << "<rect x='0' y='0' "
@@ -470,6 +477,12 @@ void GamaLocalSVG::svg_draw_point(const PointID& pid,
 
       double x, y;
       svg_xy(point, x, y);
+
+      if (point.free_xy())
+        {
+            *svg << "<line x1='" << x << "' y1='" << y << "' x2='"<<x+0.01320*10000 <<
+                  "' y2='"<< y+0.00957*10000 << "' style='stroke:#000;stroke-width:2' marker-end='url(#arrowhead)' />\n";
+        }
 
       if (tst_draw_point_symbols)
         {
