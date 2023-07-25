@@ -33,6 +33,7 @@ bool gama_local_deformation_help(std::ostream& out,int argc, char *argv[]);
 #include <memory>
 #include <map>
 
+#include <gnu_gama/local/svg.h>
 #include <gnu_gama/xml/localnetwork_adjustment_results.h>
 using Results = GNU_gama::LocalNetworkAdjustmentResults;
 
@@ -101,12 +102,12 @@ int main(int argc, char *argv[])
 
     std::map<std::string, Rec2> adjrec;
 
-    auto epoch1 = std::make_unique<Results>();
+    const auto epoch1 = std::make_unique<Results>();
     {
-        std::ifstream inp_epoch1(argv[1]);
+        std::ifstream inp_epoch1(argv_epoch1);
         if (!inp_epoch1) {
-            std::cout << "   ####  ERROR ON OPENING 1st EPOCH ADJUSTMENT FILE "
-                      << argv[1] << "\n";
+            std::cout << "   ####  ERROR OPENING 1st EPOCH ADJUSTMENT FILE "
+                      << argv_epoch2 << "\n";
             return 1;
         }
         epoch1->read_xml(inp_epoch1);
@@ -129,15 +130,14 @@ int main(int argc, char *argv[])
 
     auto epoch2 = std::make_unique<Results>();
     {
-        std::ifstream inp_epoch2(argv[2]);
+        std::ifstream inp_epoch2(argv_epoch2);
         if (!inp_epoch2) {
-            std::cout << "   ####  ERROR ON OPENING 2nd EPOCH ADJUSTMENT FILE "
-                      << argv[2] << "\n";
+            std::cout << "   ####  ERROR OPENING 2nd EPOCH ADJUSTMENT FILE "
+                      << argv_epoch2 << "\n";
             return 1;
         }
         epoch2->read_xml(inp_epoch2);
     }
-
     for (const auto& p2 : epoch2->adjusted_points)
     {
         auto& rec = adjrec[p2.id];
@@ -299,6 +299,94 @@ int main(int argc, char *argv[])
         }
 
     std::cout << C;
+
+
+    if (argv_svg_file.empty()) return 0;
+
+    // std::cout << "XXXXXX  " << argv_svg_file << "\n";
+
+    auto IS = new GNU_gama::local::LocalNetwork;
+    //------------------------------------------
+    {
+        std::string epoch_is = epoch2->network_general_parameters.epoch;
+        if (!epoch_is.empty()) IS->set_epoch(std::stod(epoch_is.c_str()));
+
+        std::string algorithm = epoch2->network_general_parameters.gama_local_algorithm;
+        IS->set_algorithm(algorithm);
+
+        std::string axes = epoch2->network_general_parameters.axes_xy;
+        IS->PD.local_coordinate_system
+            = GNU_gama::local::LocalCoordinateSystem::string2locos(axes);
+
+    }
+
+
+    for (const auto& ptfix : epoch2->fixed_points)
+    {
+        if (!ptfix.hxy) continue;
+
+        auto& point = IS->PD[ptfix.id];
+        point = GNU_gama::local::LocalPoint(ptfix.x, ptfix.y, ptfix.z);
+        point.set_fixed_xy();
+        point.set_unused_z();
+
+        point.index_x() = point.index_y() = point.index_z() = 0;
+    }
+
+    for (const auto& ptadj : epoch2->adjusted_points)
+    {
+        if (!ptadj.hxy || ptadj.indx==0 || ptadj.indy==0) continue;
+
+        auto& point = IS->PD[ptadj.id];
+        point = GNU_gama::local::LocalPoint(ptadj.x, ptadj.y, ptadj.z);
+        if (ptadj.cxy) point.set_constrained_xy();
+        else           point.set_free_xy();
+        point.set_unused_z();
+
+        point.index_x() = ptadj.indx;
+        point.index_y() = ptadj.indy;
+        point.index_z() = 0;
+    }
+
+    GNU_gama::local::StandPoint* standpoint = new GNU_gama::local::StandPoint(&IS->OD);
+    for (const auto& obs : epoch2->obslist)
+    {
+        using GNU_gama::local::Distance;
+
+        if (obs.xml_tag == "angle")
+        {
+            auto dist1 = new Distance(obs.from, obs.left,  1.0);
+            auto dist2 = new Distance(obs.from, obs.right, 1.0);
+            standpoint->observation_list.push_back(dist1);
+            standpoint->observation_list.push_back(dist2);
+        }
+        else
+        {
+            auto dist = new Distance(obs.from, obs.to, 1.0);
+            standpoint->observation_list.push_back(dist);
+        }
+    }
+
+    int k =standpoint->size();
+    standpoint->covariance_matrix.reset(k,0);
+    for (int i=1; i<=k; i++) standpoint->covariance_matrix(i,i) = 1;
+
+
+    IS->OD.clusters.push_back(standpoint);
+
+    for (auto& e : epoch2->ellipses)
+    {
+        IS->stash_std_error_ellipse(e.id, e.major, e.minor, e.alpha);
+    }
+
+    GNU_gama::local::set_gama_language(GNU_gama::local::en);
+
+    //GeneralParameters(IS, std::cout);
+    //std::cout << IS->export_xml();
+    //++++++++++++++++++++++++++++++++++++++++++
+    GNU_gama::local::GamaLocalSVG svg(IS);
+    std::ofstream svg_file(argv_svg_file);
+    svg.draw(svg_file);
 }
 
 
@@ -317,7 +405,7 @@ epoch1 and epoch2 are adjustment results in XML format of the surveying network.
            The program computes the shift vectors of common adjusted points
            and their corresponding covariance matrix.
 
---text     deformation analises in textual format. If missing, standard
+--text     deformation analyses in textual format. If missing, standard
            output device is used (i.e. screen).
 --svg      if defined, the program writes SVG image of the second epoch
            adjustment with standard deviation ellipses and points' shits.
