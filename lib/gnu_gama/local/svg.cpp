@@ -268,7 +268,7 @@ void GamaLocalSVG::draw(std::ostream& output_stream) const
     " </marker>\n"
     "</defs>\n";
 
-#if 0
+#if 1
   *svg << "<rect x='0' y='0' "
        << "width ='" << wmaxx << "' "
        << "height='" << wmaxy << "' "
@@ -480,8 +480,12 @@ void GamaLocalSVG::svg_draw_point(const PointID& pid,
 
       if (point.free_xy())
         {
-            *svg << "<line x1='" << x << "' y1='" << y << "' x2='"<<x+0.01320*10000 <<
-                  "' y2='"<< y+0.00957*10000 << "' style='stroke:#000;stroke-width:2' marker-end='url(#arrowhead)' />\n";
+            double dx = 4.45, dy = 3.08;
+            dx *= offset/ab_median*ellipsescale ;
+            dy *= offset/ab_median*ellipsescale ;
+
+            *svg << "<line x1='" << x << "' y1='" << y << "' x2='"<<x+dx<<
+                  "' y2='"<< y+dy << "' style='stroke:#000;stroke-width:2' marker-end='url(#arrowhead)' />\n";
         }
 
       if (tst_draw_point_symbols)
