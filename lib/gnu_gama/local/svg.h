@@ -31,6 +31,7 @@
 #include <gnu_gama/xml/localnetworkxml.h>
 #include <string>
 #include <ostream>
+#include <tuple>
 
 namespace GNU_gama { namespace local {
 
@@ -142,6 +143,13 @@ namespace GNU_gama { namespace local {
       void SvgCoordinates(double& t11, double& t12,
                           double& t21, double& t22,
                           double& tx,  double& ty) const;
+
+      /** Optional std::map of adjusted points' shifts (epoch2 - epoch1)
+       *  dim 3 : dx dy dz   dim 2: dx dy   dim 1 : dz
+       */
+      typedef std::tuple<int, double , double, double>  shift; // dim, dx, dy, dz
+      typedef std::map<GNU_gama::local::PointID, shift> Shift;
+      Shift shifts;
 
     private:
       LocalNetwork&          IS;

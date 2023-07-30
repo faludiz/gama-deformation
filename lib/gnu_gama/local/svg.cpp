@@ -478,14 +478,18 @@ void GamaLocalSVG::svg_draw_point(const PointID& pid,
       double x, y;
       svg_xy(point, x, y);
 
-      if (point.free_xy())
-        {
-            double dx = 4.45, dy = 3.08;
+      if (point.free_xy()) {
+            auto shift = shifts.find(pid);
+            if (shift != shifts.end()) {
+
+            double dx = 1000*std::get<1>(shift->second); // dx in millimeters
+            double dy = 1000*std::get<2>(shift->second);
             dx *= offset/ab_median*ellipsescale ;
             dy *= offset/ab_median*ellipsescale ;
 
             *svg << "<line x1='" << x << "' y1='" << y << "' x2='"<<x+dx<<
                   "' y2='"<< y+dy << "' style='stroke:#000;stroke-width:2' marker-end='url(#arrowhead)' />\n";
+            }
         }
 
       if (tst_draw_point_symbols)
