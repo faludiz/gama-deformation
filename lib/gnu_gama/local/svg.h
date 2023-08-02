@@ -155,7 +155,6 @@ namespace GNU_gama { namespace local {
       LocalNetwork&          IS;
       const PointData&       PD;
       const ObservationData& OD;
-      const double y_sign;   // consistent coordinates +1, inconsistent -1
 
       mutable std::ostream*  svg;
 

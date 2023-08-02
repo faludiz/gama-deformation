@@ -39,7 +39,7 @@ using Results = GNU_gama::LocalNetworkAdjustmentResults;
 
 #include <matvec/bandmat.h>
 
-// #define DEBUG
+// #define DEBUG_GAMA_LOCAL_DEFORMATION
 
 std::string argv_epoch1, argv_epoch2, argv_text_file, argv_svg_file;
 
@@ -72,12 +72,12 @@ struct Rec2 {
         return d;
     }
 
-#ifdef DEBUG
+#ifdef DEBUG_GAMA_LOCAL_DEFORMATION
     friend std::ostream& operator<<(std::ostream& os, const Rec2& rec);
 #endif
 };
 
-#ifdef DEBUG
+#ifdef DEBUG_GAMA_LOCAL_DEFORMATION
 std::ostream& operator<<(std::ostream& os, const Rec2& rec)
 {
     using std::setw;
@@ -122,9 +122,9 @@ int main(int argc, char *argv[])
         rec.indz1 = p1.indz; rec.z1 = p1.z;
     }
 
-#ifdef DEBUG
-    for (const auto& r : adjrec) std::cout << r.second;
-    std::cout << epoch1->cov;
+#ifdef DEBUG_GAMA_LOCAL_DEFORMATION
+    for (const auto& r : adjrec) std::cerr << r.second;
+    std::cerr << epoch1->cov;
 #endif
 
 
@@ -147,9 +147,9 @@ int main(int argc, char *argv[])
         rec.indz2 = p2.indz; rec.z2 = p2.z;
     }
 
-#ifdef DEBUG
-    for (const auto& r : adjrec) std::cout << r.second;
-    std::cout << epoch2->cov;
+#ifdef DEBUG_GAMA_LOCAL_DEFORMATION
+    for (const auto& r : adjrec) std::cerr << r.second;
+    std::cerr << epoch2->cov;
 #endif
 
 
@@ -157,9 +157,8 @@ int main(int argc, char *argv[])
     for (const auto& r : adjrec) adjcov_dim += r.second.dim();
 
 
-#ifdef DEBUG
-
-    // std::cout << adjcov << "\n";
+#ifdef DEBUG_GAMA_LOCAL_DEFORMATION
+    // std::cerr << adjcov << "\n";
 #endif
 
     std::vector<int> t1 {0}, t2 {0}; // 1 based index transformation
@@ -178,20 +177,20 @@ int main(int argc, char *argv[])
         }
     }
 
-#ifdef DEBUG
-    std::cout << "\nadjcov_dim = " << adjcov_dim << "\n";
+#ifdef DEBUG_GAMA_LOCAL_DEFORMATION
+    std::cerr << "\nadjcov_dim = " << adjcov_dim << "\n";
 
-    std::cout << "t1 = ";
+    std::cerr << "t1 = ";
     for (int i=1; i<=adjcov_dim; i++) {
-        std::cout << t1[i] << " ";
+        std::cerr << t1[i] << " ";
     }
-    std::cout << std::endl;
+    std::cerr << std::endl;
 
-    std::cout << "t2 = ";
+    std::cerr << "t2 = ";
     for (int i=1; i<=adjcov_dim; i++) {
-        std::cout << t2[i] << " ";
+        std::cerr << t2[i] << " ";
     }
-    std::cout << "\n\n";
+    std::cerr << "\n\n";
 #endif
 
     idw = 0;
@@ -229,9 +228,13 @@ int main(int argc, char *argv[])
             adjdiff[id] = rec;
         }
 
-    std::cout << "# point id | covariance indexes |"
-                 " x, y, z shifts (epoch2 - epoch1) |"
-                 " epoch2  x, y, z\n\n";
+    std::cout <<R"""(
+# gama-local-deformation
+# ----------------------
+#
+# point id | covariance indexes | x,y,z shifts (epoch2-epoch1) | epoch2  x,y,z
+
+)""";
 
     int prec  {5};
     std::cout.setf(std::ios_base::fixed, std::ios_base::floatfield);
@@ -285,10 +288,10 @@ int main(int argc, char *argv[])
                   << std::endl;
     }
 
-    std::cout << "\n\n# deformation covariance matrix of x, y, z shifts\n\n";
+    std::cout << "\n\n# deformation covariance matrix of x,y,z shifts\n\n";
 
-#ifdef DEBUG
-    std::cout << epoch1->cov << "\n\n" << epoch2->cov << "\n\n";
+#ifdef DEBUG_GAMA_LOCAL_DEFORMATION
+    std::cerr << epoch1->cov << "\n\n" << epoch2->cov << "\n\n";
 #endif
 
     GNU_gama::CovMat<> C(cov_index, cov_index-1);
@@ -318,8 +321,17 @@ int main(int argc, char *argv[])
         IS->PD.local_coordinate_system
             = GNU_gama::local::LocalCoordinateSystem::string2locos(axes);
 
+        std::string angles = epoch2->network_general_parameters.angles;
+        if (angles == "left-handed")
+            IS->PD.setAngularObservations_Lefthanded();
+        else if (angles == "right-handed")
+            IS->PD.setAngularObservations_Righthanded();
+        else
+            ; // this should never happen, keep implicit setting (left-handed)
+
     }
 
+    // const int ysign = IS->y_sign();
 
     for (const auto& ptfix : epoch2->fixed_points)
     {
@@ -347,6 +359,10 @@ int main(int argc, char *argv[])
         point.index_y() = ptadj.indy;
         point.index_z() = 0;
     }
+
+#ifdef DEBUG_GAMA_LOCAL_DEFORMATION
+    std::cerr << "\n****** IS->export_xml()\n\n" << IS->export_xml();
+#endif
 
     GNU_gama::local::StandPoint* standpoint = new GNU_gama::local::StandPoint(&IS->OD);
     for (const auto& obs : epoch2->obslist)
@@ -381,9 +397,6 @@ int main(int argc, char *argv[])
 
     GNU_gama::local::set_gama_language(GNU_gama::local::en);
 
-    //GeneralParameters(IS, std::cout);
-    //std::cout << IS->export_xml();
-    //++++++++++++++++++++++++++++++++++++++++++
     GNU_gama::local::GamaLocalSVG svg(IS);
     std::ofstream svg_file(argv_svg_file);
     svg.draw(svg_file);
