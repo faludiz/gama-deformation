@@ -21,8 +21,8 @@
 /** \file svg.h
  * \brief #GNU_gama::local::GamaLocalSVG class header file
  *
- * \author Ales Cepek
- * \author Maxime Le Moual
+ * \author Ales Cepek 2014, 2023
+ * \author Maxime Le Moual 2014
  */
 
 #ifndef GAMA_LOCAL_SVG_Gama_Local_Svg_gama_local_svg_h

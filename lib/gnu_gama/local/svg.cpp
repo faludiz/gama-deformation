@@ -22,8 +22,8 @@
 /** \file svg.cpp
  * \brief #GNU_gama::local::GamaLocalSVG class implementation
  *
- * \author Ales Cepek
- * \author Maxime Le Moual
+ * \author Ales Cepek 2014, 2023
+ * \author Maxime Le Moual 2014
  */
 
 #include <cmath>
