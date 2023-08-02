@@ -306,8 +306,6 @@ int main(int argc, char *argv[])
 
     if (argv_svg_file.empty()) return 0;
 
-    // std::cout << "XXXXXX  " << argv_svg_file << "\n";
-
     auto IS = new GNU_gama::local::LocalNetwork;
     //------------------------------------------
     {
@@ -331,7 +329,6 @@ int main(int argc, char *argv[])
 
     }
 
-    // const int ysign = IS->y_sign();
 
     for (const auto& ptfix : epoch2->fixed_points)
     {
@@ -399,6 +396,18 @@ int main(int argc, char *argv[])
 
     GNU_gama::local::GamaLocalSVG svg(IS);
     std::ofstream svg_file(argv_svg_file);
+
+    for (const auto& rec : adjdiff) {
+        auto id = rec.first;
+        int dim = rec.second.indx + rec.second.indy + rec.second.indz;
+
+        double dx = rec.second.dx;
+        double dy = rec.second.dy;
+        double dz = rec.second.dz;
+
+        svg.shifts[id] = std::make_tuple(dim, dx, dy, dz);
+    }
+
     svg.draw(svg_file);
 }
 
