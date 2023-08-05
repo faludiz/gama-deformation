@@ -55,6 +55,7 @@ void GamaLocalSVG::restoreDefaults()
   fixedsymbol = "triangle";         fixedfill = "blue";
   constrainedsymbol = "circle";     constrainedfill = "green";
   freesymbol = "circle";            freefill = "yellow";
+  xyshiftcolor = "black";
 
   svg_init();
 }
@@ -262,7 +263,7 @@ void GamaLocalSVG::draw(std::ostream& output_stream) const
     "\n"
     "<defs>\n"
     "  <marker id='arrowhead' markerWidth='10' markerHeight='7'\n"
-    "  refX='0' refY='3.5' orient='auto' >\n"
+    "  refX='0' refY='3.5' orient='auto' style='fill:" << xyshiftcolor << "'>\n"
     " <polygon points='0 0, 10 3.5, 0 7' />\n"
     " </marker>\n"
     "</defs>\n";
@@ -486,8 +487,10 @@ void GamaLocalSVG::svg_draw_point(const PointID& pid,
             dx *= offset/ab_median*ellipsescale ;
             dy *= offset/ab_median*ellipsescale ;
 
-            *svg << "<line x1='" << x << "' y1='" << y << "' x2='"<<x+dx<<
-                  "' y2='"<< y+dy << "' style='stroke:#000;stroke-width:2' marker-end='url(#arrowhead)' />\n";
+            *svg << "<line x1='" << x << "' y1='" << y
+                 << "' x2='" << x+dx << "' y2='"<< y+dy
+                 << "' style='stroke:" << xyshiftcolor << ";stroke-width:2"
+                 << "' marker-end='url(#arrowhead)' />\n";
             }
         }
 
