@@ -125,11 +125,12 @@ void GamaLocalSVG::svg_init() const
   if (tst_implicit_size) ellipsescale = 1.0;
 
   bool first_point = true;
-  // tminx, tmaxx, tminy, tmaxy are set for the first point
+  // tminx, tmaxx, tminy, tmaxy are set for the first point,
   // initialization here is just to remove compiler warning
   double x, y, tminx {0}, tmaxx {0}, tminy {0}, tmaxy {0};
   for (int iter=1; iter<=2; iter++)
   {
+
   for (PointData::const_iterator i=PD.begin(), e=PD.end(); i!=e; ++i)
     {
       PointID    pid   = i->first;
@@ -138,8 +139,8 @@ void GamaLocalSVG::svg_init() const
       // skip points that are not part of the adjustment or do not have xy
       if (!point.active_xy() || !point.test_xy()) continue;
 
-      T11 = TX.x;   T12 = TY.x;
-      T21 = TX.y;   T22 = TY.y;
+      //...T11 = TX.x;   T12 = TY.x;
+      //...T21 = TX.y;   T22 = TY.y;
       Tx  = 2*offset - minx;
       Ty  = 2*offset - miny;
 
@@ -188,8 +189,8 @@ void GamaLocalSVG::svg_init() const
 
   if (offset == 0) offset = 100;
 
-  T11 = TX.x;   T12 = TY.x;
-  T21 = TX.y;   T22 = TY.y;
+  //...T11 = TX.x;   T12 = TY.x;
+  //...T21 = TX.y;   T22 = TY.y;
   Tx  = 2*offset - minx;
   Ty  = 2*offset - miny;
 
@@ -220,13 +221,6 @@ void GamaLocalSVG::svg_init() const
   std::cerr << "### symbolsize  = " << symbolsize << "\n";
   std::cerr << "### strokewidth = " << strokewidth << "\n";
 #endif
-}
-
-void GamaLocalSVG::SvgCoordinates(double &t11, double &t12,
-                                  double &t21, double &t22,
-                                  double &tx,  double &ty) const
-{
-  t11 = T11;  t12 = T12;  t21 = T21;  t22 = T22;  tx = Tx;  ty = Ty;
 }
 
 void GamaLocalSVG::svg_xy(const LocalPoint& point, double& x, double& y) const
