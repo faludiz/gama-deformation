@@ -30,7 +30,6 @@
 #include <sstream>
 #include <utility>
 #include <set>
-#include <limits>
 #include <gnu_gama/local/svg.h>
 #include <gnu_gama/radian.h>
 
