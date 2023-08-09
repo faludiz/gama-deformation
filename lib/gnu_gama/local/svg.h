@@ -154,7 +154,7 @@ namespace GNU_gama { namespace local {
 
       mutable std::ostream*  svg;
 
-      mutable double T11, T12, T21, T22, Tx, Ty;
+      mutable double T11, T12, T21, T22, Tx, Ty, Txsign, Tysign;
 
       // SVG coordinates bounding box and offset
       mutable bool tst_implicit_size;
