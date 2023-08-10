@@ -125,6 +125,11 @@ namespace GNU_gama { namespace local {
       /** Set symbol for fixed points */
       void setXyShiftColor(std::string p) { xyshiftcolor = p; }
 
+      /** Z shift vectors color */
+      std::string zShiftColor() const { return zshiftcolor; }
+      /** Set symbol for fixed points */
+      void setZShiftColor(std::string p) { zshiftcolor = p; }
+
       /** Restores default program settings derived from given coordinates set. */
       void restoreDefaults();
 
@@ -175,7 +180,7 @@ namespace GNU_gama { namespace local {
       mutable bool tst_draw_axes, tst_draw_point_symbols, tst_draw_point_ids,
         tst_draw_ellipses, tst_draw_observations;
       mutable std::string  fixedsymbol, fixedfill, constrainedsymbol,
-        constrainedfill, freesymbol, freefill, xyshiftcolor;
+        constrainedfill, freesymbol, freefill, xyshiftcolor, zshiftcolor;
 
 
       /* helper svg point class */

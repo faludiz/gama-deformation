@@ -56,6 +56,7 @@ void GamaLocalSVG::restoreDefaults()
   freesymbol = "circle";            freefill = "yellow";
 
   xyshiftcolor = "black";
+  zshiftcolor = "black";   // not implemented yet
 }
 
 void GamaLocalSVG::svg_init() const
