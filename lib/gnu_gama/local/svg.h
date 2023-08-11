@@ -178,7 +178,7 @@ namespace GNU_gama { namespace local {
 
       mutable double fontsize, symbolsize, strokewidth;
       mutable bool tst_draw_axes, tst_draw_point_symbols, tst_draw_point_ids,
-        tst_draw_ellipses, tst_draw_observations;
+          tst_draw_observations, tst_draw_ellipses, tst_draw_xy_shifts, tst_draw_z_shifts;
       mutable std::string  fixedsymbol, fixedfill, constrainedsymbol,
         constrainedfill, freesymbol, freefill, xyshiftcolor, zshiftcolor;
 

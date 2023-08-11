@@ -49,6 +49,8 @@ void GamaLocalSVG::restoreDefaults()
   tst_draw_point_symbols = true;
   tst_draw_point_ids = true;
   tst_draw_ellipses = true;
+  tst_draw_xy_shifts = false; // true;
+  tst_draw_z_shifts = true;
   tst_draw_observations = true;
 
   fixedsymbol = "triangle";         fixedfill = "blue";
@@ -120,7 +122,7 @@ void GamaLocalSVG::svg_init() const
   ab_median = 4;
 
   bool bminx, bmaxx, bminy, bmaxy;
-  do {
+  if (tst_draw_xy_shifts) do {
       bminx = bmaxx = bminy = bmaxy = false;
       for (PointData::const_iterator i=PD.begin(), e=PD.end(); i!=e; ++i)
       {
@@ -195,34 +197,44 @@ void GamaLocalSVG::svg_init() const
   double x, y, tminx {0}, tmaxx {0}, tminy {0}, tmaxy {0};
 
   Tx = Ty = 0;
-  if (0) for (PointData::const_iterator i=PD.begin(), e=PD.end(); i!=e; ++i)
-    {
-      PointID    pid   = i->first;
-      LocalPoint point = i->second;
-
-      // skip points that are not part of the adjustment or do not have xy
-      if (!point.active_xy() || !point.test_xy()) continue;
-
-      svg_xy(point, x, y);
-
-      if (tst_draw_ellipses &&
-          (IS.is_adjusted() || IS.has_stashed_ellipses()) && !point.fixed_xy())
+  bool elminx, elmaxx, elminy, elmaxy;
+  do {
+      elminx = elmaxx = elminy = elmaxy = false;
+      for (PointData::const_iterator i=PD.begin(), e=PD.end(); i!=e; ++i)
       {
+          PointID    pid   = i->first;
+          LocalPoint point = i->second;
+
+          // skip points that are not part of the adjustment or do not have xy
+          if (!point.active_xy() || !point.test_xy()) continue;
+
+          svg_xy(point, x, y);
+
+          if (tst_draw_ellipses &&
+              (IS.is_adjusted() || IS.has_stashed_ellipses()) && !point.fixed_xy())
+          {
           double a, b, alpha;
           svg_ellipse(pid, a, b, alpha);
 
           // *** bounding box with 10% extra space for huge ellipses
-          // double t  = atan2(-b*sin(alpha), a*cos(alpha));
-          // double u  = atan2( b*cos(alpha), a*sin(alpha));
-          // double dx = 1.1*abs(a*cos(t)*cos(alpha) - b*sin(t)*sin(alpha));
-          // double dy = 1.1*abs(b*sin(u)*cos(alpha) + a*cos(u)*sin(alpha));
-      }
-    }
+          double t  = atan2(-b*sin(alpha), a*cos(alpha));
+          double u  = atan2( b*cos(alpha), a*sin(alpha));
+          double dx = 1.1*abs(a*cos(t)*cos(alpha) - b*sin(t)*sin(alpha));
+          double dy = 1.1*abs(b*sin(u)*cos(alpha) + a*cos(u)*sin(alpha));
 
-  /*
-  offset = (maxx-minx + maxy-miny)/2*0.05;
-  if (offset <= 0) offset = 100;
-*/
+          if (minx - offset > x + dx) elminx = true;
+          if (maxx + offset < x + dx) elmaxx = true;
+          if (miny - offset > y + dy) elminy = true;
+          if (maxy + offset < y + dy) elmaxy = true;
+          }
+      }
+      if (elminx) minx -= offset;
+      if (elmaxx) maxx += offset;
+      if (elminy) miny -= offset;
+      if (elmaxy) maxy += offset;
+  }
+  while (elminx || elmaxx || elminy || elmaxy);
+
   if (tst_implicit_size)
   {
     setMinimalSize();
@@ -500,7 +512,7 @@ void GamaLocalSVG::svg_draw_point(const PointID& pid,
       double x, y;
       svg_xy(point, x, y);
 
-      if (point.free_xy()) {
+      if (tst_draw_xy_shifts && point.free_xy()) {
             auto shift = shifts.find(pid);
             if (shift != shifts.end()) {
 
