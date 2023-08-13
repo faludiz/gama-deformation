@@ -19,7 +19,7 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  $
 */
 
-const char* gama_local_deformation_version = "0.10";
+const char* gama_local_deformation_version = "0.20";
 
 #include <iostream>
 bool gama_local_deformation_help(std::ostream& out,int argc, char *argv[]);
@@ -244,25 +244,24 @@ int main(int argc, char *argv[])
     for (auto& rec : adjdiff)
     {
         auto& r = rec.second;
-        {
-            std::ostringstream strx;
-            strx.precision(prec);
-            strx.setf(std::ios_base::fixed);
-            strx << r.dx;
-            indxw = std::max<int>(indxw, strx.str().length());
-        }{
-            std::ostringstream stry;
-            stry.precision(prec);
-            stry.setf(std::ios_base::fixed);
-            stry << r.dy;
-            indyw = std::max<int>(indyw, stry.str().length());
-        }{
-            std::ostringstream strz;
-            strz.precision(prec);
-            strz.setf(std::ios_base::fixed);
-            strz << r.dz;
-            indzw = std::max<int>(indzw, strz.str().length());
-        }
+
+        std::ostringstream strx;
+        strx.precision(prec);
+        strx.setf(std::ios_base::fixed);
+        strx << r.dx;
+        indxw = std::max<int>(indxw, strx.str().length());
+
+        std::ostringstream stry;
+        stry.precision(prec);
+        stry.setf(std::ios_base::fixed);
+        stry << r.dy;
+        indyw = std::max<int>(indyw, stry.str().length());
+
+        std::ostringstream strz;
+        strz.precision(prec);
+        strz.setf(std::ios_base::fixed);
+        strz << r.dz;
+        indzw = std::max<int>(indzw, strz.str().length());
     }
 
     indw = 1 + std::log10<int>(cov_index);
@@ -326,7 +325,6 @@ int main(int argc, char *argv[])
             IS->PD.setAngularObservations_Righthanded();
         else
             ; // this should never happen, keep implicit setting (left-handed)
-
     }
 
 
