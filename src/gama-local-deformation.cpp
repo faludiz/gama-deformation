@@ -228,6 +228,19 @@ int main(int argc, char *argv[])
             adjdiff[id] = rec;
         }
 
+    std::ofstream* text {nullptr};
+    if (!argv_text_file.empty())
+    {
+        text = new std::ofstream;
+        text->open(argv_text_file);
+        if (text->fail()) {
+            std::cerr << "\nError on opening output text file " << argv_text_file << "\n\n";
+            return 1;
+        }
+        // std::streambuf* coutbuf = std::cout.rdbuf();
+        std::cout.rdbuf(text->rdbuf());
+    }
+
     std::cout <<R"""(
 # gama-local-deformation
 # ----------------------
@@ -394,6 +407,10 @@ int main(int argc, char *argv[])
 
     GNU_gama::local::GamaLocalSVG svg(IS);
     std::ofstream svg_file(argv_svg_file);
+    if (svg_file.fail()) {
+        std::cerr << "\nError on opening output SVG file " << argv_text_file << "\n\n";
+        return 1;
+    }
 
     for (const auto& rec : adjdiff) {
         auto id = rec.first;
