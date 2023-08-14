@@ -21,7 +21,7 @@
 /** \file svg.cpp
  * \brief #GNU_gama::local::GamaLocalSVG class implementation
  *
- * \author Ales Cepek 2012
+ * \author Ales Cepek 2012, 2023
  * \author Maxime Le Moual 2014
  */
 
@@ -49,7 +49,7 @@ void GamaLocalSVG::restoreDefaults()
   tst_draw_point_symbols = true;
   tst_draw_point_ids = true;
   tst_draw_ellipses = true;
-  tst_draw_xy_shifts = true;
+  tst_draw_xy_shifts = false;//true;
   tst_draw_z_shifts = true;
   tst_draw_observations = true;
 
@@ -166,13 +166,16 @@ void GamaLocalSVG::svg_init() const
               // *** bounding box with 10% extra space for huge ellipses
               double t  = atan2(-b*sin(alpha), a*cos(alpha));
               double u  = atan2( b*cos(alpha), a*sin(alpha));
-              double dx = 1.1*abs(a*cos(t)*cos(alpha) - b*sin(t)*sin(alpha));
-              double dy = 1.1*abs(b*sin(u)*cos(alpha) + a*cos(u)*sin(alpha));
+              double dx = abs(a*cos(t)*cos(alpha) - b*sin(t)*sin(alpha));
+              double dy = abs(b*sin(u)*cos(alpha) + a*cos(u)*sin(alpha));
 
-              if (minx - offset > x + dx) ellipse_minx = true;
-              if (maxx + offset < x + dx) ellipse_maxx = true;
-              if (miny - offset > y + dy) ellipse_miny = true;
-              if (maxy + offset < y + dy) ellipse_maxy = true;
+              if (y < 0) dy = -dy;
+              double q = 1.5;
+              if (minx - q*offset > x + dx) ellipse_minx = true;
+              if (maxx + q*offset < x + dx) ellipse_maxx = true;
+              if (miny - q*offset > y + dy) ellipse_miny = true;
+              if (maxy + q*offset < y + dy) ellipse_maxy = true;
+
           }
       }
       if (ellipse_minx) minx -= offset;
