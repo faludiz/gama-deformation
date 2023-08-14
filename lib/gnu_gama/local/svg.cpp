@@ -49,7 +49,7 @@ void GamaLocalSVG::restoreDefaults()
   tst_draw_point_symbols = true;
   tst_draw_point_ids = true;
   tst_draw_ellipses = true;
-  tst_draw_xy_shifts = false;//true;
+  tst_draw_xy_shifts = true;
   tst_draw_z_shifts = true;
   tst_draw_observations = true;
 
@@ -160,6 +160,7 @@ void GamaLocalSVG::svg_init() const
           if (tst_draw_ellipses &&
               (IS.is_adjusted() || IS.has_stashed_ellipses()) && !point.fixed_xy())
           {
+
               double a, b, alpha;
               svg_ellipse(pid, a, b, alpha);
 
@@ -169,12 +170,13 @@ void GamaLocalSVG::svg_init() const
               double dx = abs(a*cos(t)*cos(alpha) - b*sin(t)*sin(alpha));
               double dy = abs(b*sin(u)*cos(alpha) + a*cos(u)*sin(alpha));
 
-              if (y < 0) dy = -dy;
-              double q = 1.5;
-              if (minx - q*offset > x + dx) ellipse_minx = true;
-              if (maxx + q*offset < x + dx) ellipse_maxx = true;
-              if (miny - q*offset > y + dy) ellipse_miny = true;
-              if (maxy + q*offset < y + dy) ellipse_maxy = true;
+              double q = 1.3;
+              auto min_ = [](double a,double b) { return std::min(a-b,a+b); };
+              auto max_ = [](double a,double b) { return std::max(a-b,a+b); };
+              if (min_(minx, q*offset) > min_(x, dx)) ellipse_minx = true;
+              if (max_(maxx, q*offset) < max_(x, dx)) ellipse_maxx = true;
+              if (min_(miny, q*offset) > min_(y, dy)) ellipse_miny = true;
+              if (max_(maxy, q*offset) < max_(y, dy)) ellipse_maxy = true;
 
           }
       }
@@ -536,6 +538,29 @@ void GamaLocalSVG::svg_draw_point(const PointID& pid,
                << "rotate("<< alpha << ")' "
                << "style='stroke:grey;stroke-width:"
                << strokewidth << ";fill:none;' />\n";
+#if 0
+          { // draw ellipse bounding box, debugging only
+            double x, y;
+            svg_xy(point, x, y);
+
+            double a, b, alpha;
+            svg_ellipse(pid, a, b, alpha);
+
+            // *** bounding box for ellipses
+            double t  = atan2(-b*sin(alpha), a*cos(alpha));
+            double u  = atan2( b*cos(alpha), a*sin(alpha));
+            double dx = abs(a*cos(t)*cos(alpha) - b*sin(t)*sin(alpha));
+            double dy = abs(b*sin(u)*cos(alpha) + a*cos(u)*sin(alpha));
+
+            *svg << "<polygon points='"
+                 << x-dx <<"," << y-dy << " "
+                 << x+dx <<"," << y-dy << " "
+                 << x+dx <<"," << y+dy << " "
+                 << x-dx <<"," << y+dy << " "
+                 << "' style='fill-opacity:0;stroke:lime;stroke-width:"
+                 << 0.5 << "' />";
+          }
+#endif
         }
 }
 
