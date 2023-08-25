@@ -445,7 +445,7 @@ epoch1 and epoch2 are adjustment results in XML format of the surveying network.
 --text     deformation analyses in textual format. If missing, standard
            output device is used (i.e. screen).
 --svg      if defined, the program writes SVG image of the second epoch
-           adjustment with standard deviation ellipses and points' shits.
+           adjustment with standard deviation ellipses and points' shifts.
            The network schema is available only in 2D (xy coordinates only).
 --version
 --help
